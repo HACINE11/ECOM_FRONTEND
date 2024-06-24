@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse,HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { SmsService } from './sms.service';
@@ -13,14 +13,38 @@ export class ClientService {
 
   constructor(private http: HttpClient, private smsService: SmsService) {}
 
-  // calculateAnciennete(clientId: string): Observable<{ anciennete: string }> {
-  //   return this.http.get<{ anciennete: string }>(`${this.apiUrlClient}calculateAnciennete/${clientId}`)
-  //     .pipe(
-  //       map((response: any) => {
-  //         return { anciennete: response.anciennete };
-  //       })
-  //     );
-  // }
+ // Add the searchClients method
+//  searchClients(searchTerm: string): Observable<Client[]> {
+//   return this.http.get<Client[]>(`${this.apiUrlClient}?search=${searchTerm}`);
+// }
+
+// searchClients(criteria: any): Observable<Client[]> {
+//   let params = new HttpParams();
+//   for (const key in criteria) {
+//     if (criteria.hasOwnProperty(key) && criteria[key]) {
+//       params = params.append(key, criteria[key]);
+//     }
+//   }
+//   return this.http.get<Client[]>(this.apiUrlClient, { params });
+// }
+getClientStatistics(): Observable<any> {
+  return this.http.get(`${this.apiUrlClient}/statistics`);
+}
+
+// getClientStatistics(): Observable<any> {
+//   return this.http.get<any>(this.apiUrlClient);
+// }
+
+searchClients(criteria: any): Observable<Client[]> {
+  let params = new HttpParams();
+  for (const key in criteria) {
+    if (criteria.hasOwnProperty(key) && criteria[key]) {
+      params = params.append(key, criteria[key]);
+    }
+  }
+  return this.http.get<Client[]>(this.apiUrlClient, { params });
+}
+
   calculateAnciennete(clientId: string): Observable<{ anciennete: string }> {
     return this.http.get<{ anciennete: string }>(`${this.apiUrlClient}/calculateAnciennete/${clientId}`)
       .pipe(

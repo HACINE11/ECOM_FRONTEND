@@ -18,6 +18,7 @@
     text-align: center;
     color: #333;
   }
+
   
  
   /* Autres styles CSS */
@@ -38,3 +39,14 @@
   }
 
   /* Autres styles CSS */
+
+.search-container {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+

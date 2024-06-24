@@ -10,19 +10,21 @@ import { ClientsComponent } from './pages/clients/clients.component';
 import { ClientFormComponent } from './pages/client-form/client-form.component';
 import { CategorieClientsComponent } from './pages/categorie-clients/categorie-clients.component';
 import { CategorieClientFormComponent } from './pages/categorie-client-form/categorie-client-form.component';
+import { StatisticsComponent } from './pages/statistics/statistics.component';
+
 // import { CategorieClientFormComponent } from './pages/categorie-client-form/categorie-client-form.component';
 
 const routes: Routes = [
-  {
-    path: 'tasks',
-    component: TasksComponent,
-    canActivate: [ AuthGuardService ]
-  },
-  {
-    path: 'profile',
-    component: ProfileComponent,
-    canActivate: [ AuthGuardService ]
-  },
+  // {
+  //   path: 'tasks',
+  //   component: TasksComponent,
+  //   canActivate: [ AuthGuardService ]
+  // },
+  // {
+  //   path: 'profile',
+  //   component: ProfileComponent,
+  //   canActivate: [ AuthGuardService ]
+  // },
   {
     path: 'home',
     component: HomeComponent,
@@ -72,7 +74,11 @@ const routes: Routes = [
   component: CategorieClientFormComponent,
   canActivate: [ AuthGuardService ]
 },
-
+{
+  path: 'Statistic',
+  component: StatisticsComponent,
+  canActivate: [ AuthGuardService ]
+},
   // {
   //   path: 'change-password/:recoveryCode',
   //   component: ChangePasswordFormComponent,

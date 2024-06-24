@@ -19,7 +19,8 @@ export class ClientsComponent {
   listClientsSearched:Client[] = [];
   client: Client | null = null;
   anciennete: string = '';
-
+  searchTerm: string = '';
+  clients: any[] = [];
   constructor(private sr:ClientService){}
 
   ngOnInit() {
@@ -40,7 +41,29 @@ export class ClientsComponent {
       error:(er)=>alert(er.message)
     })
   }
+  // onSearch(): void {
+  //   this.sr.searchClients(this.searchTerm).subscribe(
+  //     (data: any[]) => this.clients = data,
+  //     (error: any) => console.error('Error fetching clients', error)
+  //   );
+  // }
 
+  onSearch(): void {
+    const searchCriteria = {
+      nom: this.searchTerm,
+      prenom: this.searchTerm,
+      email: this.searchTerm,
+      region: this.searchTerm,
+      adressePostal: this.searchTerm,
+      telPortable: this.searchTerm,
+      statutCompte: this.searchTerm
+    };
+
+    this.sr.searchClients(searchCriteria).subscribe(
+      (data: Client[]) => this.clients = data,
+      (error: any) => console.error('Error fetching clients', error)
+    );
+  }
   removeClient(id:string){
     this.sr.deleteClient(id).subscribe({
       next:()=>{

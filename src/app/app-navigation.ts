@@ -8,14 +8,14 @@ export const navigation = [
     text: 'gestion client',
     icon: 'folder',
     items: [
-      {
-        text: 'Profile',
-        path: '/profile'
-      },
-      {
-        text: 'Tasks',
-        path: '/tasks'
-      },
+      // {
+      //   text: 'Profile',
+      //   path: '/profile'
+      // },
+      // {
+      //   text: 'Tasks',
+      //   path: '/tasks'
+      // },
       
       {
         text: 'add categorie client',
@@ -33,6 +33,10 @@ export const navigation = [
       {
         text: 'add client',
         path:'/addclient'
+      },
+      {
+        text: 'Statistic Client',
+        path:'/Statistic'
       }
      
     ]
