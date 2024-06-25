@@ -16,13 +16,15 @@ import { FormReclamationComponent } from './form-reclamation/form-reclamation.co
 import { StatisticsComponent } from './statistics/statistics.component';
 
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import { FormCategoryComponent } from './form-category/form-category.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListReclamationComponent,
     FormReclamationComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    FormCategoryComponent
   ],
   imports: [
     BrowserModule,
