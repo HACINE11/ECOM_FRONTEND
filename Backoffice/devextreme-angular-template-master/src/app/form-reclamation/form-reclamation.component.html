@@ -1,0 +1,73 @@
+
+
+<div class="container"><br><br>
+    <h3 class="mt-5 mb-3"> Traitement du reclamation </h3>
+    
+    <form [formGroup]="reclamationForm" (ngSubmit)="onSubmit()">
+        
+    <div class="container">
+    
+        <button class="btn btn-primary" type="submit" [disabled]="reclamationForm.invalid">Traité</button>
+    
+    
+        <div class="form-group">
+            <label for="notes" class="control-label notes-label">Notes</label>
+            <textarea class="form-control" id="notes" rows="5" placeholder="Enter a detailed notes" formControlName="notes"></textarea>
+        </div> 
+    
+        <div class="form-group">
+            <label for="priority" class="control-label">State</label>
+            <select class="form-control" id="priority" formControlName="statut_rec">
+                <option value="in_progress">in progress</option>
+                <option value="on_hold">on hold</option>
+                <option value="resolved">resolved</option>
+            </select>
+        </div>
+    
+            <div class="form-group">
+                <label for="title" class="control-label">Title</label>
+                <input type="text" class="form-control" id="title" placeholder="Enter title" formControlName="title"  readonly>
+            </div>
+            <div class="form-group">
+                <label for="priority" class="control-label">Priority</label>
+                <select class="form-control" id="priority" formControlName="priority">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="priority" class="control-label">Category</label>
+                <select class="form-control" id="priority" formControlName="category">
+                               
+                    <option *ngFor="let categorie of listCategorie" [value]="categorie._id">{{ categorie.libelleCategorie }}</option>
+                    
+                    
+                </select><br>
+                <small class="text-info" *ngIf="selectedDescription">
+                    {{ selectedDescription }}
+                </small>
+                <small class="text-danger" *ngIf="">
+                    Guest Name is required.
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="description" class="control-label description-label">Description</label>
+                <textarea class="form-control" id="description" rows="5" placeholder="Enter a detailed description" formControlName="description" readonly></textarea>
+            </div>
+    
+    
+                  <!-- New div for image preview -->
+          <div *ngIf="imagePreviewUrl" class="form-group">
+            <label class="control-label">Image Preview</label>
+            <div class="image-preview-container">
+              <img [src]="imagePreviewUrl" alt="Image Preview" class="img-thumbnail">
+            </div>
+          </div>
+        </div>
+    
+    
+        <br><br>
+    </form>
+    </div>
+    
