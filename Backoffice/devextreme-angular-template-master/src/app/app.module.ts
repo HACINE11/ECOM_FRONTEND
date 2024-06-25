@@ -17,6 +17,7 @@ import { StatisticsComponent } from './statistics/statistics.component';
 
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { FormCategoryComponent } from './form-category/form-category.component';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { FormCategoryComponent } from './form-category/form-category.component';
     ListReclamationComponent,
     FormReclamationComponent,
     StatisticsComponent,
-    FormCategoryComponent
+    FormCategoryComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
