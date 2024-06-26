@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
@@ -61,21 +61,17 @@ export class AuthService {
   }
 
   //sign up 
-  async createAccount(email: string, password: string) {
-    try {
-      // Send request
-
-      this.router.navigate(['/create-account']);
-      return {
-        isOk: true
-      };
-    }
-    catch {
-      return {
-        isOk: false,
-        message: "Failed to create account"
-      };
-    }
+  createAccount(email: string, motPasse: string) : Observable<any> {
+    return this.http.post<any>('http://localhost:9090/user/signup', { email, motPasse })
+      .pipe(
+        map(response => {
+          this.router.navigate(['/create-account']);
+          return { isOk: true };
+        }),
+        catchError(error => {
+          return of({ isOk: false, message: "Failed to create account" });
+        })
+      );
   }
 
   async changePassword(email: string, recoveryCode: string) {
@@ -116,11 +112,11 @@ export class AuthService {
   }
 }
 
-@Injectable({
-  providedIn:'root'
-})
+@Injectable({ providedIn:'root'  })
+
 export class AuthGuardService implements CanActivate {
-  constructor(private router: Router, private authService: AuthService) { }
+  
+  constructor( @Inject(Router) private router: Router, private authService: AuthService) { }
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
     const isLoggedIn = this.authService.loggedIn;
