@@ -7,10 +7,28 @@ import { FooterModule, ResetPasswordFormModule, CreateAccountFormModule, ChangeP
 import { AuthService, ScreenService, AppInfoService } from './shared/services';
 import { UnauthenticatedContentModule } from './unauthenticated-content';
 import { AppRoutingModule } from './app-routing.module';
+import { ListReclamationComponent } from './list-reclamation/list-reclamation.component';
+
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule  } from '@angular/router';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormReclamationComponent } from './form-reclamation/form-reclamation.component';
+import { StatisticsComponent } from './statistics/statistics.component';
+
+import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import { CategoryComponent } from './category/category.component';
+import { NotificationComponent } from './notification/notification.component';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ListReclamationComponent,
+    FormReclamationComponent,
+    StatisticsComponent,
+    CategoryComponent,
+    ModalComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -23,7 +41,12 @@ import { AppRoutingModule } from './app-routing.module';
     ChangePasswordFormModule,
     LoginFormModule,
     UnauthenticatedContentModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule,
+    CanvasJSAngularChartsModule
   ],
   providers: [
     AuthService,

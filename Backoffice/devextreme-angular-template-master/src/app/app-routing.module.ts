@@ -6,6 +6,10 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
 import { DxDataGridModule, DxFormModule } from 'devextreme-angular';
+import { ListReclamationComponent } from './list-reclamation/list-reclamation.component';
+import { FormReclamationComponent } from './form-reclamation/form-reclamation.component';
+import { StatisticsComponent } from './statistics/statistics.component';
+import { CategoryComponent } from './category/category.component';
 
 const routes: Routes = [
   {
@@ -41,6 +45,23 @@ const routes: Routes = [
   {
     path: 'change-password/:recoveryCode',
     component: ChangePasswordFormComponent,
+    canActivate: [ AuthGuardService ]
+  },
+  {
+    path:"listRec",    
+    component: ListReclamationComponent,
+    canActivate: [ AuthGuardService ]
+  },
+  { path:"edit/:id", 
+    component: FormReclamationComponent,
+    canActivate: [ AuthGuardService ]
+  },
+  { path:"addCat", 
+    component: CategoryComponent,
+    canActivate: [ AuthGuardService ]
+  },
+  { path:"sta", 
+    component: StatisticsComponent,
     canActivate: [ AuthGuardService ]
   },
   {
