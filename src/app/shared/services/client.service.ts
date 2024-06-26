@@ -13,6 +13,16 @@ export class ClientService {
 
   constructor(private http: HttpClient, private smsService: SmsService) {}
 
+
+
+  checkMatriculeFiscaleExists(matriculeFiscale: string): Observable<boolean> {
+    return this.http.get<{ exists: boolean }>(`${this.apiUrlClient}/clients/check-matricule/${matriculeFiscale}`)
+      .pipe(
+        map(response => response.exists)
+      );
+  }
+
+
  // Add the searchClients method
 //  searchClients(searchTerm: string): Observable<Client[]> {
 //   return this.http.get<Client[]>(`${this.apiUrlClient}?search=${searchTerm}`);

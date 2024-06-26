@@ -8,68 +8,44 @@ import { CategorieClientService, ClientService } from 'src/app/shared/services';
 @Component({
   selector: 'app-client-form',
   templateUrl: './client-form.component.html',
-
   styleUrls: ['./client-form.component.css']
 })
-export class ClientFormComponent  implements OnInit{
+export class ClientFormComponent implements OnInit {
   clientForm: FormGroup;
   errorMessage: string | null = null;
   successMessage: string | null = null;
   client!: Client;
-  listCatClient!:Categorieclient[]
-  statuslist = ['actif', 'inactif', 'suspendu']
-  idc!:string;
-  c!:Client;
-  constructor(private clientService: ClientService, private fb: FormBuilder,
+  listCatClient!: Categorieclient[];
+  statuslist = ['actif', 'inactif', 'suspendu'];
+  idc!: string;
+  c!: Client;
+
+  constructor(
+    private clientService: ClientService,
+    private fb: FormBuilder,
     private ccs: CategorieClientService,
-    private ar: ActivatedRoute,
+    private ar: ActivatedRoute
   ) {
     this.clientForm = this.fb.group({
-      nom: ['', Validators.required],
-      prenom: ['', Validators.required],
+      nom: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      prenom: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       email: ['', [Validators.required, Validators.email]],
-      addressePostal: ['', Validators.required],
-      telPortable: ['', Validators.required],
-      telFixe: [Validators.required],
-      matriculeFiscale: [ '',Validators.required],
+      addressePostal: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(200)]],
+      telPortable: ['', [Validators.required, Validators.pattern(/^\+\d{1,3}\d{4,14}(?:x\d+)?$/)]],
+      telFixe: ['', [Validators.required, Validators.min(10000000), Validators.max(99999999)]],
+      matriculeFiscale: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
       dateInscription: ['', Validators.required],
-      chiffreAffaire: [ Validators.required],
-      niveauSatisfaction: ['', Validators.required],
+      chiffreAffaire: ['', [Validators.required, Validators.min(0)]],
+      niveauSatisfaction: ['', [Validators.required, Validators.min(0), Validators.max(5)]],
       statutCompte: ['', Validators.required],
-      region: ['', Validators.required],
-      pointFidelite: [ '100',Validators.required],
+      region: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      pointFidelite: [100],
       categorieClientId: ['', Validators.required]
-      
     });
-    // if(this.idc != undefined){
-    //   this.clientService.getClientById(this.idc).subscribe({
-    //     next:(l)=>{
-    //       alert("update succes !")
-    //       this.c = l
-    //       console.log("ffffffffffffffffffffffffffff"+this.c);
-          
-    //     },
-    //     error:(er)=>alert(er.message)
-    //   })
-    //   this.clientForm.patchValue(this.c);
-
-    // }
-
-    // this.ccs.getcategorieclients().subscribe({
-    //   next:(l)=>{
-    //     this.listCatClient = l;
-    //     console.log(this.listCatClient);
-        
-    //   },
-    //   error:(er)=>alert(er.message)
-    // })
-    // this.idc = ar.snapshot.params["id"]
-    // console.log(this.idc);
-    
   }
+
   ngOnInit(): void {
     this.idc = this.ar.snapshot.params['id'];
-    console.log(this.idc);
 
     if (this.idc) {
       this.clientService.getClientById(this.idc).subscribe({
@@ -86,44 +62,36 @@ export class ClientFormComponent  implements OnInit{
     this.ccs.getcategorieclients().subscribe({
       next: (categories) => {
         this.listCatClient = categories;
-        console.log(this.listCatClient);
       },
       error: (error) => {
         alert('Erreur lors de la récupération des catégories : ' + error.message);
       }
     });
   }
-  
+
   onSubmit() {
-   if (this.idc == undefined) {
-      console.log(this.clientForm.value);
-      if (this.clientForm.valid) {
-      console.log("****************");
-        this.clientService.addClient(this.clientForm.value).subscribe(
-          response => {
-            // this.successMessage = 'Client ajouté avec succès et un message de confirmation a été envoyé.';
-            // this.errorMessage = null;
+    if (this.clientForm.valid) {
+      if (this.idc) {
+        this.clientService.updateClient(this.idc, this.clientForm.value).subscribe({
+          next: () => {
+            alert('Client mis à jour avec succès');
+          },
+          error: (error) => {
+            console.error('Erreur lors de la mise à jour du client', error);
+          }
+        });
+      } else {
+        this.clientService.addClient(this.clientForm.value).subscribe({
+          next: () => {
             alert('Client ajouté avec succès');
           },
-          error => {
-            // this.errorMessage = 'Erreur lors de l\'ajout du client';
-            // this.successMessage = null;
-            console.error('Erreur lors de l\'ajout du client', error); // Afficher l'erreur complète dans la console
+          error: (error) => {
+            console.error('Erreur lors de l\'ajout du client', error);
           }
-        );
-      } else {
-        alert('Veuillez remplir tous les champs requis.');
-        this.successMessage = null;
+        });
       }
-    }else{
-      this.clientService.updateClient(this.idc,this.clientForm.value).subscribe({
-        next:(l)=>{
-          alert("update succes !")
-          
-        },
-        error:(er)=>alert(er.message)
-      })
-
+    } else {
+      alert('Veuillez remplir tous les champs requis.');
     }
-   }
-}  
+  }
+}
