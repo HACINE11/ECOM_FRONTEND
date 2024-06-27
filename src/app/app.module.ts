@@ -28,6 +28,7 @@ import { StatisticsComponent } from './pages/statistics/statistics.component';
     CategorieClientFormComponent,
     CategorieClientsComponent,
     StatisticsComponent,
+    
   ],
   imports: [
     BrowserModule,

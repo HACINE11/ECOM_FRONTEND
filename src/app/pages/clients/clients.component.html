@@ -96,9 +96,15 @@
   <h1 class="my-4" style="font-size:30px;">Liste des Clients :</h1>
   <button type="button" class="btn btn-success" (click)="exportClientsToPDF()">PDF</button>
 
+  <div class="search-container">
+    <input #searchInput (input)="searchClientrechercher($event)" class="form-control" type="search" placeholder="Search" aria-label="Search">
+    <button type="button" class="btn-search" (click)="searchClientrechercher({ target: { value: searchInput.value } })">Search</button>
+  </div>
+
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
-      <thead *ngIf="listClientsSearched && listClientsSearched.length">
+      <thead *ngIf="listClientsSearched.length != 0">
+       
         <tr>
           <th scope="col">Nom</th>
           <th scope="col">Prénom</th>

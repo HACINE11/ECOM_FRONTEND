@@ -83,23 +83,23 @@ export class ClientFormComponent implements OnInit {
       } else {
         this.clientService.addClient(this.clientForm.value).subscribe({
           next: () => {
-            // this.successMessage = 'Client ajouté avec succès';
+            //  this.successMessage = 'Client ajouté avec succès';
             alert('Client ajouté avec succès.');
 
             this.errorMessage = null;
           },
           error: (error) => {
             alert('le matricule est unique.');
-            //  this.errorMessage = error;
+              // this.errorMessage = error;
 
-            // this.successMessage = null;
+            //  this.successMessage = null;
            
 
           }
         });
       }
     } else {
-      alert('Veuillez remplir tous les champs requis.');
+       alert('Veuillez remplir tous les champs requis.');
     }
   }
 }

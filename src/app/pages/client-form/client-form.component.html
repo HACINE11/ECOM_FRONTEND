@@ -133,7 +133,15 @@
           Le chiffre d'affaire doit être au moins 0.
         </div>
       </div>
-     
+      <div>
+        <select class="ss" formControlName="niveauSatisfaction">
+          <option value=""></option> <!-- Option avec la valeur par défaut '0' -->
+          <option *ngFor="let i of [0,1,2,3,4,5]" [value]="i">{{i}}</option>
+        </select>
+        <div *ngIf="clientForm.get('niveauSatisfaction')?.invalid && clientForm.get('niveauSatisfaction')?.touched">
+          Le niveau de satisfaction doit être entre 0 et 5.
+        </div>
+      </div>
       <div>
         <select class="ss" formControlName="statutCompte">
           <option *ngFor="let s of statuslist" [value]="s">{{s}}</option>
