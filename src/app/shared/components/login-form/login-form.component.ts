@@ -20,10 +20,10 @@ export class LoginFormComponent {
 
   onSubmit(e: Event) {
     e.preventDefault();
-    const { email, password } = this.formData;
+    const { email, motPasse } = this.formData;
     this.loading = true;
 
-    this.authService.logIn(email, password).subscribe(
+    this.authService.logIn(email, motPasse).subscribe(
       result => {
         this.loading = false;
 

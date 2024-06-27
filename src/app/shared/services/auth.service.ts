@@ -7,6 +7,13 @@ import { map, catchError } from 'rxjs/operators';
 export interface IUser {
   email: string;
   avatarUrl?: string;
+  nom?: string;
+  prenom?: string;
+  entreprise?: string;
+  matriculeFiscal?: string;
+  address?: string;
+  mobile?: number;
+  role?: string;
 }
 
 const defaultPath = '/';
@@ -34,6 +41,7 @@ export class AuthService {
     return this.http.post<any>('http://localhost:9090/user/signin', { email, motPasse })
       .pipe( map(response => {
           this._user = { ...defaultUser, email: response.result.email };
+          localStorage.setItem("token", response.token);
           this.router.navigate([this._lastAuthenticatedPath]);
           return { isOk: true, data: this._user };
         }),
@@ -109,7 +117,30 @@ export class AuthService {
   async logOut() {
     this._user = null;
     this.router.navigate(['/login-form']);
+    localStorage.removeItem("token");
   }
+ 
+
+getUserSession(): Observable<any> {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return of({ isOk: false, data: null });
+  }
+
+  return this.http.get<any>('http://localhost:9090/user/session', {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }).pipe(
+    map(response => {
+      this._user = response;
+      return { isOk: true, data: this._user };
+    }),
+    catchError(error => {
+      return of({ isOk: false, data: null });
+    })
+  );
+}
 }
 
 @Injectable({ providedIn:'root'  })
