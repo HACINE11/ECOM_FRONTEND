@@ -4,6 +4,8 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { SmsService } from './sms.service';
 import { Client } from 'src/app/core/models/client';
+import { CategorieClientsComponent } from 'src/app/pages/categorie-clients/categorie-clients.component';
+import { Categorieclient } from 'src/app/core/models/categorieclient';
 
 @Injectable({
   providedIn: 'root'
@@ -23,37 +25,20 @@ export class ClientService {
   }
 
 
- // Add the searchClients method
-//  searchClients(searchTerm: string): Observable<Client[]> {
-//   return this.http.get<Client[]>(`${this.apiUrlClient}?search=${searchTerm}`);
-// }
 
-// searchClients(criteria: any): Observable<Client[]> {
-//   let params = new HttpParams();
-//   for (const key in criteria) {
-//     if (criteria.hasOwnProperty(key) && criteria[key]) {
-//       params = params.append(key, criteria[key]);
-//     }
-//   }
-//   return this.http.get<Client[]>(this.apiUrlClient, { params });
-// }
 getClientStatistics(): Observable<any> {
   return this.http.get(`${this.apiUrlClient}/statistics`);
 }
 
-// getClientStatistics(): Observable<any> {
-//   return this.http.get<any>(this.apiUrlClient);
-// }
 
-searchClients(criteria: any): Observable<Client[]> {
-  let params = new HttpParams();
-  for (const key in criteria) {
-    if (criteria.hasOwnProperty(key) && criteria[key]) {
-      params = params.append(key, criteria[key]);
-    }
-  }
-  return this.http.get<Client[]>(this.apiUrlClient, { params });
+
+searchClients(key: string) {
+  return this.http.get<Client[]>(this.apiUrlClient+"search/"+key);
 }
+  // searchClients(query: string): Observable<any> {
+  //   const params = new HttpParams().set('q', query);
+  //   return this.http.get<any>(this.apiUrlClient, { params });
+  // }
 
   calculateAnciennete(clientId: string): Observable<{ anciennete: string }> {
     return this.http.get<{ anciennete: string }>(`${this.apiUrlClient}/calculateAnciennete/${clientId}`)
@@ -70,22 +55,28 @@ searchClients(criteria: any): Observable<Client[]> {
       catchError(this.handleError)
     );
   }
-  addClient(clientData:Client){
-    return this.http.post(this.apiUrlClient,clientData);
-  }
-  // addClient(clientData: Client){
+ 
+
+  // addClient(clientData: Client): Observable<Client> {
   //   return this.http.post<Client>(this.apiUrlClient, clientData).pipe(
-  //     // switchMap(response => {
-  //     //   const phoneNumber = clientData.telPortable;
-  //     //   const message = 'Client ajouté avec succès';
-  //     //   return this.smsService.sendSms(phoneNumber, message).pipe(
-  //     //     map(() => response)
-  //     //   );
-  //     // }),
-  //     // catchError(this.handleError) // catchError doit être après switchMap pour capturer toutes les erreurs
+  //     catchError(this.handleError)
   //   );
   // }
-// 
+  addClient(clientData: Client){
+    return this.http.post<Client>(this.apiUrlClient, clientData).pipe(
+      switchMap(response => {
+        const phoneNumber = clientData.telPortable;
+        const message = 'Client ajouté avec succès';
+        alert('Client ajouté avec succès');
+        return this.smsService.sendSms(phoneNumber, message).pipe(
+          map(() => response)
+        );
+      
+      }),
+      // catchError(this.handleError) // catchError doit être après switchMap pour capturer toutes les erreurs
+    );
+  }
+
 
   getClientById(id: string){
     return this.http.get<Client>(`${this.apiUrlClient}${id}`)
@@ -113,4 +104,13 @@ searchClients(criteria: any): Observable<Client[]> {
     console.error('HTTP Error:', errorMessage); // Afficher l'erreur complète dans la console
     return throwError(errorMessage);
   }
+
+  getCategorieClientsByLibelle(libelle: string): Observable<Categorieclient[]> {
+    return this.http.get<Categorieclient[]>(`${this.apiUrlClient}/categories/search`, { params: { libelle } });
+  }
+
+  getClientsByCategorieIds(ids: string[]): Observable<Client[]> {
+    return this.http.post<Client[]>(`${this.apiUrlClient}/clients/byCategorieIds`, { ids });
+  }
+
 }

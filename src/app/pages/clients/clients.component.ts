@@ -21,7 +21,46 @@ export class ClientsComponent {
   anciennete: string = '';
   searchTerm: string = '';
   clients: any[] = [];
+  categories: any[] = [];
+  error: string = '';
+  filteredClients: any[] = [];
   constructor(private sr:ClientService){}
+
+
+  
+  searchClientrechercher(event: any) {
+    const key = event.target.value;
+    if (event.target.value.length >= 2) { // Start search after 3 characters
+      this.sr.searchClients(key)
+      .subscribe((rec) => {
+          this.listClientsSearched = rec;
+          // this.sortReclamationsByDate();
+        }, error => {
+          console.error('Error searching reclamtion', error);
+        });
+    } else {
+      this.getAllClients(); // Show all services if search key is less than 3 characters
+    }
+  }
+  
+
+  filterClients(): void {
+    if (this.searchTerm.trim()) {
+      const searchTermLower = this.searchTerm.toLowerCase();
+      this.filteredClients = this.clients.filter(client =>
+        client.nom.toLowerCase().includes(searchTermLower) ||
+        client.prenom.toLowerCase().includes(searchTermLower) ||
+        client.email.toLowerCase().includes(searchTermLower) ||
+        client.region.toLowerCase().includes(searchTermLower) ||
+        client.adressePostal.toLowerCase().includes(searchTermLower) ||
+        client.telPortable.toLowerCase().includes(searchTermLower) ||
+        client.statutCompte.toLowerCase().includes(searchTermLower)
+      );
+    } else {
+      this.filteredClients = [...this.clients];
+    }
+  }
+
 
   ngOnInit() {
     this.getAllClients();
@@ -47,23 +86,7 @@ export class ClientsComponent {
   //     (error: any) => console.error('Error fetching clients', error)
   //   );
   // }
-
-  onSearch(): void {
-    const searchCriteria = {
-      nom: this.searchTerm,
-      prenom: this.searchTerm,
-      email: this.searchTerm,
-      region: this.searchTerm,
-      adressePostal: this.searchTerm,
-      telPortable: this.searchTerm,
-      statutCompte: this.searchTerm
-    };
-
-    this.sr.searchClients(searchCriteria).subscribe(
-      (data: Client[]) => this.clients = data,
-      (error: any) => console.error('Error fetching clients', error)
-    );
-  }
+  
   removeClient(id:string){
     this.sr.deleteClient(id).subscribe({
       next:()=>{

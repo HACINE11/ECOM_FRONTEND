@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Categorieclient } from 'src/app/core/models/categorieclient';
 import { Client } from 'src/app/core/models/client';
-import { CategorieClientService, ClientService } from 'src/app/shared/services';
+import { ClientService } from 'src/app/shared/services/client.service';
+import { CategorieClientService } from 'src/app/shared/services/categorie-client.service';
 
 @Component({
   selector: 'app-client-form',
@@ -15,7 +15,7 @@ export class ClientFormComponent implements OnInit {
   errorMessage: string | null = null;
   successMessage: string | null = null;
   client!: Client;
-  listCatClient!: Categorieclient[];
+  listCatClient: any[] = [];
   statuslist = ['actif', 'inactif', 'suspendu'];
   idc!: string;
   c!: Client;
@@ -83,10 +83,18 @@ export class ClientFormComponent implements OnInit {
       } else {
         this.clientService.addClient(this.clientForm.value).subscribe({
           next: () => {
-            alert('Client ajouté avec succès');
+            // this.successMessage = 'Client ajouté avec succès';
+            alert('Client ajouté avec succès.');
+
+            this.errorMessage = null;
           },
           error: (error) => {
-            console.error('Erreur lors de l\'ajout du client', error);
+            alert('le matricule est unique.');
+            //  this.errorMessage = error;
+
+            // this.successMessage = null;
+           
+
           }
         });
       }

@@ -1,228 +1,147 @@
-<!-- 
-<h1 style="font-size:22px;">Liste des Clients :</h1>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liste des Clients</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      color: #343a40;
+      padding: 10px;
+    }
+    .my-4 {
+      text-align: center;
+      color: #2e7d32;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .btn-success {
+      padding: 5px 10px;
+      color: white;
+      background-color: #4caf50;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .btn-success:hover {
+      background-color: #388e3c;
+    }
+    .btn-search {
+      padding: 5px 10px;
+      color: white;
+      background-color: #007bff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+    .btn-search:hover {
+      background-color: #0056b3;
+    }
+    .table-responsive {
+      overflow-x: auto;
+    }
+    .table {
+      width: 100%;
+      margin-bottom: 1rem;
+      background-color: #ffffff;
+      border: 1px solid #dee2e6;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .table th,
+    .table td {
+      padding: 6px 8px;
+      text-align: left;
+      border-top: 1px solid #dee2e6;
+      white-space: nowrap;
+    }
+    .table th {
+      background-color: #2e7d32;
+      color: white;
+    }
+    .table-hover tbody tr:hover {
+      background-color: #f1f1f1;
+    }
+    .table td button, .table td a {
+      padding: 3px 6px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      color: white;
+      font-size: 10px;
+    }
+    .table td button {
+      background-color: #d7d94f;
+    }
+    .table td button {
+      background-color: #d9714f;
+    }
+    .table td button:hover {
+      background-color: #c9302c;
+    }
+    .table td a {
+      background-color: #0275d8;
+    }
+    .table td a:hover {
+      background-color: #025aa5;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="my-4" style="font-size:30px;">Liste des Clients :</h1>
+  <button type="button" class="btn btn-success" (click)="exportClientsToPDF()">PDF</button>
 
-
-
-    <table border="2">
-   
-    <tr *ngIf="listClientsSearched.length != 0">
-        <th>Nom</th>
-        <th>Prénom</th>
-        <th>Email</th>
-        <th>Addresse Postable</th>
-        <th>Tel Portable</th>
-        <th>Tel Fixe</th>
-        <th>Matricule Fiscale</th>
-        <th>Date D'inscription</th>
-        <th>Chiffre D'affaire</th>
-        <th>Niveau Satisfication</th>
-        <th>Status Compte</th>
-        <th>Region</th>
-        <th>Point Fidélite</th>
-        <th>Categorie ClientId</th>
-       
-    </tr>
-    <tr *ngFor="let r of listClientsSearched">
-        <td>{{r.nom}}</td>
-        <td>{{r.prenom}}</td>
-        <td>{{r.email}}</td>
-        <td>{{r.addressePostal}}</td>
-        <td>{{r.telPortable}}</td>
-        <td>{{r.telFixe}}</td>
-        <td>{{r.matriculeFiscale}}</td>
-        <td>{{r.dateInscription}}</td>
-        <td>{{r.chiffreAffaire}}</td>
-        <td>{{r.niveauSatisfaction}}</td>
-        <td>{{r.statutCompte}}</td>
-        <td>{{r.region}}</td>
-        <td>{{r.pointFidelite}}</td>
-        <td>{{r.categorieClientId}}</td>
-      
-
-    </tr>
-   
-    
-</table>
-
-   -->
-   <!DOCTYPE html>
-   <html lang="fr">
-   <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Liste des Clients</title>
-     <style>
-       body {
-         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-         background-color: #f8f9fa;
-         color: #343a40;
-         padding: 10px;
-       }
-       .my-4 {
-         text-align: center;
-         color: #2e7d32;
-         font-size: 24px;
-         margin-bottom: 20px;
-       }
-       .btn-success {
-         padding: 5px 10px;
-         color: white;
-         background-color: #4caf50;
-         border: none;
-         border-radius: 4px;
-         cursor: pointer;
-         margin-bottom: 10px;
-       }
-       .btn-success:hover {
-         background-color: #388e3c;
-       }
-       .table-responsive {
-         overflow-x: auto;
-       }
-       .table {
-         width: 100%;
-         margin-bottom: 1rem;
-         background-color: #ffffff;
-         border: 1px solid #dee2e6;
-         border-collapse: collapse;
-         font-size: 12px;
-       }
-       .table th,
-       .table td {
-         padding: 6px 8px;
-         text-align: left;
-         border-top: 1px solid #dee2e6;
-         white-space: nowrap;
-       }
-       .table th {
-         background-color: #2e7d32;
-         color: white;
-       }
-       .table-hover tbody tr:hover {
-         background-color: #f1f1f1;
-       }
-       .table td button, .table td a {
-         padding: 3px 6px;
-         border: none;
-         border-radius: 4px;
-         cursor: pointer;
-         text-decoration: none;
-         color: white;
-         font-size: 10px;
-       }
-       .table td button {
-         background-color: #d7d94f;
-       }
-       .table td button {
-         background-color: #d9714f;
-       }
-       .table td button:hover {
-         background-color: #c9302c;
-       }
-       .table td a {
-         background-color: #0275d8;
-       }
-       .table td a:hover {
-         background-color: #025aa5;
-       }
-     </style>
-   </head>
-   <body>
-    <h1 class="my-4" style="font-size:30px;">Liste des Clients :</h1>
-<button type="button" class="btn btn-success" (click)="exportClientsToPDF()">PDF</button>
-
-<!-- 
-<div class="search-container">
-  <input [(ngModel)]="searchTerm" class="form-control" type="search" placeholder="Search" aria-label="Search">
-  <button (click)="onSearch()" class="btn btn-outline-success" type="submit">Search</button>
-</div>
-
-<div class="results-container" *ngIf="clients.length > 0">
-  <h2>Search Results</h2>
-  <ul>
-    <li *ngFor="let client of clients">
-      {{ client.nom }} {{ client.prenom }} - {{ client.email }}
-    </li>
-  </ul>
-</div> -->
-
-<!-- <div class="search-container">
-  <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-  <button class="btn btn-outline-success" type="submit">Search</button>
-</div>  -->
-
-
-<div class="search-container">
-  <input [(ngModel)]="searchTerm" class="form-control" type="search" placeholder="Search" aria-label="Search">
-  <button (click)="onSearch()" class="btn btn-outline-success" type="submit">Search</button>
-</div>
-
-<div class="results-container" *ngIf="clients.length > 0">
-  <h2>Search Results</h2>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Nom</th>
-        <th>Prénom</th>
-        <th>Email</th>
-        <!-- Ajoutez d'autres colonnes si nécessaire -->
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let client of clients">
-        <td>{{ client.nom }}</td>
-        <td>{{ client.prenom }}</td>
-        <td>{{ client.email }}</td>
-        <!-- Ajoutez d'autres colonnes si nécessaire -->
-      </tr>
-    </tbody>
-  </table>
-</div> 
-
-<div class="table-responsive">
-  <table class="table table-bordered table-hover">
-    <thead *ngIf="listClientsSearched.length != 0">
-      <tr>
-        <th scope="col">Nom</th>
-        <th scope="col">Prénom</th>
-        <th scope="col">Email</th>
-        <th scope="col">Addresse Postale</th>
-        <th scope="col">Tel Portable</th>
-        <th scope="col">Tel Fixe</th>
-        <th scope="col">Matricule Fiscale</th>
-        <th scope="col">Date D'inscription</th>
-        <th scope="col">Chiffre D'affaire</th>
-        <th scope="col">Niveau Satisfaction</th>
-        <th scope="col">Status Compte</th>
-        <th scope="col">Region</th>
-        <th scope="col">Point Fidélité</th>
-        <th scope="col">Categorie ClientId</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let r of listClientsSearched">
-        <td>{{ r.nom }}</td>
-        <td>{{ r.prenom }}</td>
-        <td>{{ r.email }}</td>
-        <td>{{ r.addressePostal }}</td>
-        <td>{{ r.telPortable }}</td>
-        <td>{{ r.telFixe }}</td>
-        <td>{{ r.matriculeFiscale }}</td>
-        <td>{{ r.dateInscription }}</td>
-        <td>{{ r.chiffreAffaire }}</td>
-        <td>{{ r.niveauSatisfaction }}</td>
-        <td>{{ r.statutCompte }}</td>
-        <td>{{ r.region }}</td>
-        <td>{{ r.pointFidelite }}</td>
-        <td>{{ r.categorieClientId }}</td>
-        <td>
-          <button (click)="removeClient(r._id)">Delete</button>
-          <a [routerLink]="['update', r._id]">Update</a>
-          <button (click)="calculateAnciennete(r._id)">Ancienneté</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <p *ngIf="anciennete">Ancienneté : {{ anciennete }}</p>
-</div>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead *ngIf="listClientsSearched && listClientsSearched.length">
+        <tr>
+          <th scope="col">Nom</th>
+          <th scope="col">Prénom</th>
+          <th scope="col">Email</th>
+          <th scope="col">Addresse Postale</th>
+          <th scope="col">Tel Portable</th>
+          <th scope="col">Tel Fixe</th>
+          <th scope="col">Matricule Fiscale</th>
+          <th scope="col">Date D'inscription</th>
+          <th scope="col">Chiffre D'affaire</th>
+          <th scope="col">Niveau Satisfaction</th>
+          <th scope="col">Status Compte</th>
+          <th scope="col">Region</th>
+          <th scope="col">Point Fidélité</th>
+          <th scope="col">Categorie ClientId</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of listClientsSearched">
+          <td>{{ r.nom }}</td>
+          <td>{{ r.prenom }}</td>
+          <td>{{ r.email }}</td>
+          <td>{{ r.addressePostal }}</td>
+          <td>{{ r.telPortable }}</td>
+          <td>{{ r.telFixe }}</td>
+          <td>{{ r.matriculeFiscale }}</td>
+          <td>{{ r.dateInscription }}</td>
+          <td>{{ r.chiffreAffaire }}</td>
+          <td>{{ r.niveauSatisfaction }}</td>
+          <td>{{ r.statutCompte }}</td>
+          <td>{{ r.region }}</td>
+          <td>{{ r.pointFidelite }}</td>
+          <td>{{ r.categorieClientId }}</td>
+          <td>
+            <button (click)="removeClient(r._id)">Delete</button>
+            <a [routerLink]="['update', r._id]">Update</a>
+            <button (click)="calculateAnciennete(r._id)">Ancienneté</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="anciennete">Ancienneté : {{ anciennete }}</p>
+  </div>
+</body>
+</html>

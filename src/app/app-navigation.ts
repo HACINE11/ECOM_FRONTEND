@@ -5,7 +5,7 @@ export const navigation = [
     icon: 'home'
   },
   {
-    text: 'gestion client',
+    text: 'Gestion Client',
     icon: 'folder',
     items: [
       // {
@@ -18,20 +18,20 @@ export const navigation = [
       // },
       
       {
-        text: 'add categorie client',
+        text: 'Ajouter Categ-Client',
         path:'/addcategorieclient'
       },
       {
-        text: 'list client',
+        text: 'list Client',
         path: '/clients'
       },
       {
-        text: 'list categorit client',
+        text: 'list Categorie-Client',
         path: '/categorieclients'
       },
      
       {
-        text: 'add client',
+        text: 'Ajouter Client',
         path:'/addclient'
       },
       {
