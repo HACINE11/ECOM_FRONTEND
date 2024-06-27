@@ -2,20 +2,20 @@ export const navigation = [
   {
     text: 'Home',
     path: '/home',
-    icon: 'home'
+    icon: 'home',
   },
   {
-    text: 'Examples',
+    text: 'Management-Categorie',
     icon: 'folder',
     items: [
       {
-        text: 'Profile',
-        path: '/profile'
+        text: 'management',
+        path: 'management-categorie',
       },
       {
-        text: 'Tasks',
-        path: '/tasks'
-      }
-    ]
-  }
+        text: 'add-categorie',
+        path: 'add-categorie',
+      },
+    ],
+  },
 ];

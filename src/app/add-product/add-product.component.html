@@ -1,0 +1,56 @@
+<div class="container">
+    <h3>{{ title() }}</h3>
+    <form [formGroup]="productForm">
+      <div class="form-group">
+        <label for="productName">Nom du Produit</label>
+        <input type="text" id="productName" name="productName" class="form-control" required formControlName="nomProduit">
+        <div class="invalid-feedback" *ngIf="productForm.get('nomProduit')!.invalid && (productForm.get('nomProduit')!.touched || productForm.get('nomProduit')!.dirty)">
+          <div *ngIf="productForm.get('nomProduit')!.errors!['required']">Nom du produit est obligatoire!</div>
+          <div *ngIf="productForm.get('nomProduit')!.errors!['minlength']">Le nom du produit doit contenir au moins 3 caractères!</div>
+          <div *ngIf="productForm.get('nomProduit')!.errors!['pattern']">Le nom du produit doit être en alphabet seulement</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantité</label>
+        <input type="number" id="quantity" name="quantity" class="form-control" min="0" required formControlName="quantite">
+        <div class="invalid-feedback" *ngIf="productForm.get('quantite')?.invalid && productForm.get('quantite')?.touched">
+          <div *ngIf="productForm.get('quantite')!.errors!['required']">La quantité est requise.</div>
+          <div *ngIf="productForm.get('quantite')!.errors!['min']">La quantité doit être supérieure à zéro.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="price">Prix</label>
+        <input type="number" step="0.1" id="price" name="price" class="form-control" min="0" required formControlName="prix">
+        <div class="invalid-feedback" *ngIf="productForm.get('prix')?.invalid && productForm.get('prix')?.touched">
+          <div *ngIf="productForm.get('prix')!.errors!['required']">Le prix est requise.</div>
+          <div *ngIf="productForm.get('prix')!.errors!['min']">Le prix doit être supérieure à zéro.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="categorie">Categorie</label>
+        <select id="categorie" class="form-control" formControlName="categorie" required>
+          <option [value]="categorie._id">{{ categorie.nomCategorie }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="descriptionProduit">Description du Produit</label>
+        <textarea id="description" name="description" class="form-control" rows="4" required formControlName="descriptionProduit"></textarea>
+        <div class="invalid-feedback" *ngIf="productForm.get('descriptionProduit')!.invalid && (productForm.get('descriptionProduit')!.touched || productForm.get('descriptionProduit')!.dirty)">
+          <div *ngIf="productForm.get('descriptionProduit')!.errors!['required']">description du produit est obligatoire!</div>
+          <div *ngIf="productForm.get('descriptionProduit')!.errors!['minlength']">La description du produit doit contenir au moins 3 caractères!</div>
+          <div *ngIf="productForm.get('descriptionProduit')!.errors!['pattern']">La description du produit doit être en alphabet seulement</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="image">Image du Produit (PNG, JPG, GIF uniquement)</label>
+        <input type="file" id="image" name="image" class="form-control-file" (change)="onFileChange($event)" required formControlName="image">
+        <div class="invalid-feedback" *ngIf="productForm.get('image')!.invalid && productForm.get('image')!.touched">
+          <div *ngIf="productForm.get('image')!.errors!['required']">Image est requise.</div>
+          <div *ngIf="productForm.get('image')!.errors!['fileTypeValidator']">Seuls les fichiers PNG, JPG et GIF sont autorisés.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid" (click)="addProduct()">{{ getMessage() }}</button>
+      </div>
+    </form>
+  </div>
