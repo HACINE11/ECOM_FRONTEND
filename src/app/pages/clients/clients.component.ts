@@ -114,7 +114,7 @@ export class ClientsComponent {
     this.sr.getClients().subscribe(clients => {
         const clientDetails = clients.map(client => {
             return [
-                { text: 'Nom: ' + client.nom, style: 'header', color: 'blue' },
+                { text: 'Nom: ', style: 'header', color: 'blue' },
                 { text: client.nom ? client.nom : 'N/A', style: 'content', color: 'black' },
                 { text: 'Prénom: ', style: 'header', color: 'blue' },
                 { text: client.prenom ? client.prenom : 'N/A', style: 'content', color: 'black' },
