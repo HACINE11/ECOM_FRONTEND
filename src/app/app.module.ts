@@ -65,6 +65,7 @@ import { StaticscComponent } from './pages/staticsc/staticsc.component';
     AddCategorieComponent,
     ListProductsComponent,
     ManagementCategoriesComponent,
+    
   ],
   imports: [
     BrowserModule,

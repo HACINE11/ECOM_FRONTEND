@@ -110,11 +110,26 @@ const routes: Routes = [
   component: StaticscComponent,
   canActivate: [ AuthGuardService ]
 },
-  // {
-  //   path: 'change-password/:recoveryCode',
-  //   component: ChangePasswordFormComponent,
-  //   canActivate: [ AuthGuardService ]
-  // },
+{
+  path: 'login-form',
+  component: LoginFormComponent,
+  canActivate: [ AuthGuardService ]
+},
+{
+  path: 'reset-password',
+  component: ResetPasswordFormComponent,
+  canActivate: [ AuthGuardService ]
+},
+{
+  path: 'create-account',
+  component: CreateAccountFormComponent,
+  canActivate: [ AuthGuardService ]
+},
+{
+  path: 'change-password/:recoveryCode',
+  component: ChangePasswordFormComponent,
+  canActivate: [ AuthGuardService ]
+},
   {
     path: '**',
     redirectTo: 'home',

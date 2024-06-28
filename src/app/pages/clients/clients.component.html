@@ -95,16 +95,10 @@
 <body>
   <h1 class="my-4" style="font-size:30px;">Liste des Clients :</h1>
   <button type="button" class="btn btn-success" (click)="exportClientsToPDF()">PDF</button>
-
-  <div class="search-container">
-    <input #searchInput (input)="searchClientrechercher($event)" class="form-control" type="search" placeholder="Search" aria-label="Search">
-    <button type="button" class="btn-search" (click)="searchClientrechercher({ target: { value: searchInput.value } })">Search</button>
-  </div>
-
+ 
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead *ngIf="listClientsSearched.length != 0">
-       
         <tr>
           <th scope="col">Nom</th>
           <th scope="col">Prénom</th>
@@ -121,6 +115,23 @@
           <th scope="col">Point Fidélité</th>
           <th scope="col">Categorie ClientId</th>
           <th scope="col">Actions</th>
+        </tr>
+        <tr>
+          <th><input [(ngModel)]="searchNom" (input)="onSearch()" placeholder="Rechercher par nom"></th>
+          <th><input [(ngModel)]="searchPrenom" (input)="onSearch()" placeholder="Rechercher par prénom"></th>
+          <th><input [(ngModel)]="searchEmail" (input)="onSearch()" placeholder="Rechercher par email"></th>
+          <th><input [(ngModel)]="searchAddressePostal" (input)="onSearch()" placeholder="Rechercher par adresse"></th>
+          <th><input [(ngModel)]="searchTelPortable" (input)="onSearch()" placeholder="Rechercher par tel portable"></th>
+          <th><input [(ngModel)]="searchTelFixe" (input)="onSearch()" placeholder="Rechercher par tel fixe"></th>
+          <th><input [(ngModel)]="searchMatriculeFiscale" (input)="onSearch()" placeholder="Rechercher par matricule fiscale"></th>
+          <th><input [(ngModel)]="searchDateInscription" (input)="onSearch()" placeholder="Rechercher par date"></th>
+          <th><input [(ngModel)]="searchChiffreAffaire" (input)="onSearch()" placeholder="Rechercher par chiffre d'affaire"></th>
+          <th><input [(ngModel)]="searchNiveauSatisfaction" (input)="onSearch()" placeholder="Rechercher par satisfaction"></th>
+          <th><input [(ngModel)]="searchStatutCompte" (input)="onSearch()" placeholder="Rechercher par statut"></th>
+          <th><input [(ngModel)]="searchRegion" (input)="onSearch()" placeholder="Rechercher par région"></th>
+          <th><input [(ngModel)]="searchPointFidelite" (input)="onSearch()" placeholder="Rechercher par points"></th>
+          <th><input [(ngModel)]="searchCategorieClientId" (input)="onSearch()" placeholder="Rechercher par catégorie"></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
