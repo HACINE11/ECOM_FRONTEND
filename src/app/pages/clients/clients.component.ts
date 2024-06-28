@@ -14,145 +14,118 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
   templateUrl: './clients.component.html',
   styleUrls: ['./clients.component.css']
 })
-export class ClientsComponent {
-  listClients:Client[] = [];
-  listClientsSearched:Client[] = [];
+export class ClientsComponent implements OnInit {
+  listClients: Client[] = [];
+  listClientsSearched: Client[] = [];
   client: Client | null = null;
   anciennete: string = '';
-  searchTerm: string = '';
-  clients: any[] = [];
-  categories: any[] = [];
-  error: string = '';
-  filteredClients: any[] = [];
-  constructor(private sr:ClientService){}
 
+  // Search criteria
+  searchNom: string = '';
+  searchPrenom: string = '';
+  searchEmail: string = '';
+  searchAddressePostal: string = '';
+  searchTelPortable: string = '';
+  searchTelFixe: string = '';
+  searchMatriculeFiscale: string = '';
+  searchDateInscription: string = '';
+  searchChiffreAffaire: string = '';
+  searchNiveauSatisfaction: string = '';
+  searchStatutCompte: string = '';
+  searchRegion: string = '';
+  searchPointFidelite: string = '';
+  searchCategorieClientId: string = '';
 
-  
-  searchClientrechercher(event: any) {
-    const key = event.target.value;
-    if (event.target.value.length >= 2) { // Start search after 3 characters
-      this.sr.searchClients(key)
-      .subscribe((rec) => {
-          this.listClientsSearched = rec;
-          // this.sortReclamationsByDate();
-        }, error => {
-          console.error('Error searching reclamtion', error);
-        });
-    } else {
-      this.getAllClients(); // Show all services if search key is less than 3 characters
-    }
-  }
-  
-
-  filterClients(): void {
-    if (this.searchTerm.trim()) {
-      const searchTermLower = this.searchTerm.toLowerCase();
-      this.filteredClients = this.clients.filter(client =>
-        client.nom.toLowerCase().includes(searchTermLower) ||
-        client.prenom.toLowerCase().includes(searchTermLower) ||
-        client.email.toLowerCase().includes(searchTermLower) ||
-        client.region.toLowerCase().includes(searchTermLower) ||
-        client.adressePostal.toLowerCase().includes(searchTermLower) ||
-        client.telPortable.toLowerCase().includes(searchTermLower) ||
-        client.statutCompte.toLowerCase().includes(searchTermLower)
-      );
-    } else {
-      this.filteredClients = [...this.clients];
-    }
-  }
-
+  constructor(private sr: ClientService) {}
 
   ngOnInit() {
     this.getAllClients();
-    
   }
-  getAllClients(){
+
+  getAllClients() {
     this.sr.getClients().subscribe({
-      next:(rec)=>{
-        console.log("*************************");
+      next: (rec) => {
         this.listClients = rec;
         this.listClientsSearched = rec;
-        console.log("*************************"+this.listClients);
-        console.log("*************************"+this.listClientsSearched);
-
-        
       },
-      error:(er)=>alert(er.message)
-    })
+      error: (er) => alert(er.message)
+    });
   }
-  // onSearch(): void {
-  //   this.sr.searchClients(this.searchTerm).subscribe(
-  //     (data: any[]) => this.clients = data,
-  //     (error: any) => console.error('Error fetching clients', error)
-  //   );
-  // }
-  
-  removeClient(id:string){
+  onSearch() {
+    this.listClientsSearched = this.listClients.filter(client => {
+      return (!this.searchNom || client.nom.toLowerCase().includes(this.searchNom.toLowerCase())) &&
+             (!this.searchPrenom || client.prenom.toLowerCase().includes(this.searchPrenom.toLowerCase())) &&
+             (!this.searchEmail || client.email.toLowerCase().includes(this.searchEmail.toLowerCase())) &&
+             (!this.searchAddressePostal || client.addressePostal.toLowerCase().includes(this.searchAddressePostal.toLowerCase())) &&
+             (!this.searchTelPortable || client.telPortable.toString().includes(this.searchTelPortable.toString())) &&
+             (!this.searchTelFixe || client.telFixe.toString().includes(this.searchTelFixe.toString())) &&
+             (!this.searchMatriculeFiscale || client.matriculeFiscale.toString().includes(this.searchMatriculeFiscale.toString())) &&
+             (!this.searchDateInscription || new Date(client.dateInscription).toLocaleDateString().includes(this.searchDateInscription)) &&
+             (!this.searchChiffreAffaire || client.chiffreAffaire.toString().includes(this.searchChiffreAffaire.toString())) &&
+             (!this.searchNiveauSatisfaction || client.niveauSatisfaction.toString().includes(this.searchNiveauSatisfaction.toString())) &&
+             (!this.searchStatutCompte || client.statutCompte.toLowerCase().includes(this.searchStatutCompte.toLowerCase())) &&
+             (!this.searchRegion || client.region.toLowerCase().includes(this.searchRegion.toLowerCase())) &&
+             (!this.searchPointFidelite || client.pointFidelite.toString().includes(this.searchPointFidelite.toString())) &&
+             (!this.searchCategorieClientId || client.categorieClientId.toString().includes(this.searchCategorieClientId.toString()));
+    });
+  }
+  removeClient(id: string) {
     this.sr.deleteClient(id).subscribe({
-      next:()=>{
-        alert("Delete success ! ");
-        this.listClients = this.listClients.filter(r=>r._id != id); 
+      next: () => {
+        alert("Delete success!");
+        this.listClients = this.listClients.filter(r => r._id != id);
         this.listClientsSearched = this.listClients;
       },
-      error:(e)=>alert(e.message),
-    })
+      error: (e) => alert(e.message),
+    });
   }
 
   async calculateAnciennete(clientId: string): Promise<void> {
     try {
       const response = await firstValueFrom(this.sr.calculateAnciennete(clientId));
       this.anciennete = response.anciennete;
-
-
-      alert('Ancienneté de client est : '+this.anciennete);
+      alert('Ancienneté de client est : ' + this.anciennete);
     } catch (error) {
       console.error('Error calculating anciennete:', error);
       alert('An error occurred while calculating anciennete');
     }
   }
+
+ 
   exportClientsToPDF() {
     this.sr.getClients().subscribe(clients => {
-        const clientDetails = clients.map(client => {
-            return [
-                { text: 'Nom: ', style: 'header', color: 'blue' },
-                { text: client.nom ? client.nom : 'N/A', style: 'content', color: 'black' },
-                { text: 'Prénom: ', style: 'header', color: 'blue' },
-                { text: client.prenom ? client.prenom : 'N/A', style: 'content', color: 'black' },
-                { text: 'Email: ', style: 'header', color: 'blue' },
-                { text: client.email ? client.email : 'N/A', style: 'content', color: 'black' },
-                { text: 'Adresse: ', style: 'header', color: 'blue' },
-                { text: client.addressePostal ? client.addressePostal : 'N/A', style: 'content', color: 'black' }, // Utilisez client.adresse au lieu de client.addressePostal
-                { text: 'Téléphone Portable: ', style: 'header', color: 'blue' },
-                { text: client.telPortable ? client.telPortable : 'N/A', style: 'content', color: 'black' },
-                { text: 'Téléphone Fixe: ', style: 'header', color: 'blue' },
-                { text: client.telFixe ? client.telFixe : 'N/A', style: 'content', color: 'black' },
-                { text: 'Matricule Fiscale: ', style: 'header', color: 'blue' },
-                { text: client.matriculeFiscale ? client.matriculeFiscale : 'N/A', style: 'content', color: 'black' },
-                { text: "Date d'Inscription: ", style: 'header', color: 'blue' },
-                { text: client.dateInscription ? new Date(client.dateInscription).toDateString() : 'N/A', style: 'content', color: 'black' },
-                { text: 'Chiffre d\'Affaires: ', style: 'header', color: 'blue' },
-                { text: client.chiffreAffaire ? client.chiffreAffaire.toString() : 'N/A', style: 'content', color: 'black' },
-                { text: 'Niveau de Satisfaction: ', style: 'header', color: 'blue' },
-                { text: client.niveauSatisfaction ? client.niveauSatisfaction.toString() : 'N/A', style: 'content', color: 'black' },
-                { text: 'Statut du Compte: ', style: 'header', color: 'blue' },
-                { text: client.statutCompte ? client.statutCompte : 'N/A', style: 'content', color: 'black' },
-                { text: 'Région: ', style: 'header', color: 'blue' },
-                { text: client.region ? client.region : 'N/A', style: 'content', color: 'black' },
-                { text: 'Points de Fidélité: ', style: 'header', color: 'blue' },
-                { text: client.pointFidelite ? client.pointFidelite.toString() : 'N/A', style: 'content', color: 'black' }, // Utilisez client.pointsFidelite au lieu de client.pointFidelite
-                { text: 'ID de la Catégorie Client: ', style: 'header', color: 'blue' },
-                { text: client.categorieClientId ? client.categorieClientId.toString() : 'N/A', style: 'content', color: 'black' },
-                { text: '\n' }
-            ];
-        });
+      const clientDetails = clients.map(client => {
+        return [
+          { text: 'Nom: ' + (client.nom || 'N/A'), style: 'header', color: 'blue' },
+          { text: 'Prénom: ' + (client.prenom || 'N/A'), style: 'header', color: 'blue' },
+          { text: 'Email: ' + (client.email || 'N/A'), style: 'header', color: 'blue' },
+          { text: 'Adresse: ' + (client.addressePostal || 'N/A'), style: 'header', color: 'blue' },
+          { text: 'Téléphone Portable: ' + (client.telPortable || 'N/A'), style: 'header', color: 'blue' },
+          { text: 'Téléphone Fixe: ' + (client.telFixe || 'N/A'), style: 'header', color: 'blue' },
+          { text: 'Matricule Fiscale: ' + (client.matriculeFiscale || 'N/A'), style: 'header', color: 'blue' },
+          { text: "Date d'Inscription: " + (client.dateInscription ? new Date(client.dateInscription).toDateString() : 'N/A'), style: 'header', color: 'blue' },
+          { text: 'Chiffre d\'Affaires: ' + (client.chiffreAffaire || 'N/A'), style: 'header', color: 'blue' },
+          { text: 'Niveau de Satisfaction: ' + (client.niveauSatisfaction || 'N/A'), style: 'header', color: 'blue' },
+          { text: 'Statut du Compte: ' + (client.statutCompte || 'N/A'), style: 'header', color: 'blue' },
+          { text: 'Région: ' + (client.region || 'N/A'), style: 'header', color: 'blue' },
+          { text: 'Points de Fidélité: ' + (client.pointFidelite || 'N/A'), style: 'header', color: 'blue' },
+          { text: 'ID de la Catégorie Client: ' + (client.categorieClientId || 'N/A'), style: 'header', color: 'blue' },
+          { text: '\n' }
+        ];
+      });
 
-        pdfMake.createPdf({
-            content: [
-                { text: 'Liste des Clients Plateforme E-MLIHA', fontSize: 25, alignment: 'center', color: 'red' },
-                ...clientDetails
-            ]
-        }).download('clients.pdf');
+      const documentDefinition = {
+        content: [
+          { text: 'Liste des Clients Plateforme E-MLIHA', fontSize: 25, alignment: 'center', color: 'red', margin: [0, 0, 0, 20] },
+          ...clientDetails
+        ],
+        styles: {
+          header: { fontSize: 12, bold: true },
+          content: { fontSize: 10 }
+        }
+      };
+
+      pdfMake.createPdf(documentDefinition).download('clients.pdf');
     });
-}
-
+  }
 }
