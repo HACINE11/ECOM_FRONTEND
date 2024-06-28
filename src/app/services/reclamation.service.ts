@@ -38,6 +38,10 @@ export class ReclamationService {
       return this.http.patch<void>(this.apiUrlReclamations + id, obj);
     }
 
+    updateReclamationPatch(id: string, obj: object){
+      return this.http.patch<void>(this.apiUrlReclamations + id, obj);
+    }
+
       //CRUD categorieReclamation:
       apiUrlCategoRec: string = this.baseUrl + 'categorieReclamations/';
 

@@ -6,6 +6,7 @@ export interface Reclamation {
     description: string;
     notes: string;
     notification: string;
+    satisfaction: string;
     priorite: 'low' | 'medium' | 'high';  // Assuming priority can only be low, medium, or high
     dateReclamation: Date;
     statut_rec: string;  // Assuming status can be new, in progress, or resolved

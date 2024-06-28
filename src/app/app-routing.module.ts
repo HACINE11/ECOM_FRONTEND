@@ -63,8 +63,7 @@ const routes: Routes = [
     canActivate: [ AuthGuardService ]
   },
   { path:"edit/:id", 
-    component: FormReclamationComponent,
-    canActivate: [ AuthGuardService ]
+    component: FormReclamationComponent
   },
   { path:"addCat", 
     component: CategoryComponent,

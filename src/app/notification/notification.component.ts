@@ -39,7 +39,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
     // Set interval to reload notifications every 15 seconds
     this.intervalId = setInterval(() => {
       this.loadNotifications();
-    }, 15000);
+    }, 1000);
   }
 
   ngOnDestroy(): void {
@@ -49,6 +49,26 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   loadNotifications(): void {
+
+    this.reclamationService.getReclamation().subscribe(
+
+      (data: Reclamation[]) => {
+        this.listReclamations = data.filter(reclamation => reclamation.satisfaction !== "0" 
+          && reclamation.satisfaction !== "0000" 
+        );
+        this.notifications = this.listReclamations.length;
+        this.numNotifications = this.notifications.toString();
+        this.redNotification = this.notifications > 0 ? "icon-button__badge" : "";
+
+        if (this.numNotifications === "0") {
+          this.numNotifications = "";
+        }
+      },
+      error => {
+        console.error('Error fetching reclamations', error);
+      }
+    );
+
     /*
     this.reclamationService.getReclamationById(this.idClient).subscribe(
       (data: Reclamation[]) => {
@@ -69,14 +89,15 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
 navigateToReclamation(id: string): void {
-  this.router.navigate(['/edit', id]).then(() => {
-    window.location.reload();
-    let obj = { notification: "0"} 
+  
 
-  //   this.reclamationService.updateReclamationPatch(id, obj).subscribe((data) =>{
-  // }); 
+    let obj = { satisfaction: "0000"} 
 
-  });
+  this.reclamationService.updateReclamationPatch(id, obj).subscribe((data) =>{
+   }); 
+  this.router.navigate(['/edit', id]);
+  this.showNotifications = false;
+  // window.location.reload();
 }
 
 toggleNotifications(): void {
