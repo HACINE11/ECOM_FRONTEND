@@ -1,6 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginFormComponent, ResetPasswordFormComponent, CreateAccountFormComponent, ChangePasswordFormComponent } from './shared/components';
+import {
+  LoginFormComponent,
+  ResetPasswordFormComponent,
+  CreateAccountFormComponent,
+  ChangePasswordFormComponent,
+} from './shared/components';
 import { AuthGuardService } from './shared/services';
 import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
@@ -18,44 +23,40 @@ import { CategorieClientsComponent } from './pages/categorie-clients/categorie-c
 import { CategorieClientFormComponent } from './pages/categorie-client-form/categorie-client-form.component';
 import { StaticscComponent } from './pages/staticsc/staticsc.component';
 
+import { AddCategorieComponent } from './add-categorie/add-categorie.component';
+import { ManagementCategoriesComponent } from './management-categories/management-categories.component';
+import { ListProductsComponent } from './list-products/list-products.component';
+import { AddProductComponent } from './add-product/add-product.component';
 // import { CategorieClientFormComponent } from './pages/categorie-client-form/categorie-client-form.component';
 
 const routes: Routes = [
-  // {
-  //   path: 'tasks',
-  //   component: TasksComponent,
-  //   canActivate: [ AuthGuardService ]
-  // },
-  // {
-  //   path: 'profile',
-  //   component: ProfileComponent,
-  //   canActivate: [ AuthGuardService ]
-  // },
+  { path: 'add-categorie', component: AddCategorieComponent },
+
+  {
+    path: 'management-categorie',
+    children: [
+      { path: '', component: ManagementCategoriesComponent },
+      { path: 'update/:idCategorie', component: AddCategorieComponent },
+      { path: ':id', component: ListProductsComponent },
+      { path: ':idCategorie/:idProduit', component: AddProductComponent },
+    ],
+  },
+  {
+    path: 'tasks',
+    component: TasksComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuardService],
+  },
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [ AuthGuardService ]
+    canActivate: [AuthGuardService],
   },
-  {
-    path: 'login-form',
-    component: LoginFormComponent,
-    canActivate: [ AuthGuardService ]
-  },
-  {
-    path: 'reset-password',
-    component: ResetPasswordFormComponent,
-    canActivate: [ AuthGuardService ]
-  },
-  {
-    path: 'create-account',
-    component: CreateAccountFormComponent,
-    canActivate: [ AuthGuardService ]
-  },
-  {
-    path: 'change-password/:recoveryCode',
-    component: ChangePasswordFormComponent,
-    canActivate: [ AuthGuardService ]
-  },
+
   {
     path:"listRec",    
     component: ListReclamationComponent,
@@ -116,18 +117,18 @@ const routes: Routes = [
   // },
   {
     path: '**',
-    redirectTo: 'home'
-  }
+    redirectTo: 'home',
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true }), DxDataGridModule, DxFormModule],
+  imports: [
+    RouterModule.forRoot(routes, { useHash: true }),
+    DxDataGridModule,
+    DxFormModule,
+  ],
   providers: [AuthGuardService],
   exports: [RouterModule],
-  declarations: [
-    HomeComponent,
-    ProfileComponent,
-    TasksComponent
-  ]
+  declarations: [HomeComponent, ProfileComponent, TasksComponent],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

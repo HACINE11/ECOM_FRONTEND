@@ -2,7 +2,7 @@ export const navigation = [
   {
     text: 'Home',
     path: '/home',
-    icon: 'home'
+    icon: 'home',
   },
   {
     text: 'Reclamation',
@@ -55,5 +55,20 @@ export const navigation = [
         path: '/Statistic'
       }
     ]
+  },
+  {
+    text: 'Management-Categorie',
+    icon: 'folder',
+    items: [
+      {
+        text: 'management',
+        path: 'management-categorie',
+      },
+      {
+        text: 'add-categorie',
+        path: 'add-categorie',
+      },
+    ],
   }
+
 ];
