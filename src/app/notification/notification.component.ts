@@ -69,23 +69,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
       }
     );
 
-    /*
-    this.reclamationService.getReclamationById(this.idClient).subscribe(
-      (data: Reclamation[]) => {
-        this.listReclamations = data.filter(reclamation => reclamation.notification !== "0");
-        this.notifications = this.listReclamations.length;
-        this.numNotifications = this.notifications.toString();
-        this.redNotification = this.notifications > 0 ? "icon-button__badge" : "";
 
-        if (this.numNotifications === "0") {
-          this.numNotifications = "";
-        }
-      },
-      error => {
-        console.error('Error fetching reclamations', error);
-      }
-    );
-    */
   }
 
 navigateToReclamation(id: string): void {
