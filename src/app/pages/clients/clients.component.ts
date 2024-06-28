@@ -91,6 +91,7 @@ export class ClientsComponent implements OnInit {
     }
   }
 
+  
  
   exportClientsToPDF() {
     this.sr.getClients().subscribe(clients => {

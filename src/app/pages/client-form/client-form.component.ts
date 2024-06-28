@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Client } from 'src/app/core/models/client';
 import { ClientService } from 'src/app/shared/services/client.service';
 import { CategorieClientService } from 'src/app/shared/services/categorie-client.service';
+import { noNumbersValidator } from 'src/app/shared/no-numbers.validator';
 
 @Component({
   selector: 'app-client-form',
@@ -27,8 +28,8 @@ export class ClientFormComponent implements OnInit {
     private ar: ActivatedRoute
   ) {
     this.clientForm = this.fb.group({
-      nom: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
-      prenom: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      nom: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100), noNumbersValidator]],
+      prenom: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100), noNumbersValidator]],
       email: ['', [Validators.required, Validators.email]],
       addressePostal: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(200)]],
       telPortable: ['', [Validators.required, Validators.pattern(/^\+\d{1,3}\d{4,14}(?:x\d+)?$/)]],
@@ -38,7 +39,7 @@ export class ClientFormComponent implements OnInit {
       chiffreAffaire: ['', [Validators.required, Validators.min(0)]],
       niveauSatisfaction: ['', [Validators.required, Validators.min(0), Validators.max(5)]],
       statutCompte: ['', Validators.required],
-      region: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      region: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100), noNumbersValidator]],
       pointFidelite: [100],
       categorieClientId: ['', Validators.required]
     });
@@ -83,23 +84,16 @@ export class ClientFormComponent implements OnInit {
       } else {
         this.clientService.addClient(this.clientForm.value).subscribe({
           next: () => {
-            //  this.successMessage = 'Client ajouté avec succès';
             alert('Client ajouté avec succès.');
-
             this.errorMessage = null;
           },
           error: (error) => {
             alert('le matricule est unique.');
-              // this.errorMessage = error;
-
-            //  this.successMessage = null;
-           
-
           }
         });
       }
     } else {
-       alert('Veuillez remplir tous les champs requis.');
+      alert('Veuillez remplir tous les champs requis.');
     }
   }
 }

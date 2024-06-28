@@ -78,6 +78,13 @@ searchClients(key: string) {
   }
 
 
+  checkEmailUnique(email: string): Observable<boolean> {
+    return this.http.get<any[]>(`${this.apiUrlClient}/clients?email=${email}`).pipe(
+      map(clients => clients.length === 0)
+    );
+  }
+
+
   getClientById(id: string){
     return this.http.get<Client>(`${this.apiUrlClient}${id}`)
   }
@@ -112,5 +119,14 @@ searchClients(key: string) {
   getClientsByCategorieIds(ids: string[]): Observable<Client[]> {
     return this.http.post<Client[]>(`${this.apiUrlClient}/clients/byCategorieIds`, { ids });
   }
+
+
+  // addOrUpdateClient(client: Client): Observable<any> {
+  //   if (client._id) {
+  //     return this.http.patch(`${this.apiUrlClient}/${client._id}`, client);
+  //   } else {
+  //     return this.http.post(this.apiUrlClient, client);
+  //   }
+  // }
 
 }
