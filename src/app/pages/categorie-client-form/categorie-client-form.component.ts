@@ -48,15 +48,7 @@ export class CategorieClientFormComponent implements OnInit{
         });
       }
   
-      // this.ccs.getcategorieclients().subscribe({
-      //   next: (categories) => {
-      //     this.listCatClient = categories;
-      //     console.log(this.listCatClient);
-      //   },
-      //   error: (error) => {
-      //     alert('Erreur lors de la récupération des catégories : ' + error.message);
-      //   }
-      // });
+     
     }
     
     onSubmit() {
