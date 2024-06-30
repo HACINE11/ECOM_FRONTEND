@@ -6,7 +6,7 @@
 </button>
 
 <div *ngIf="showNotifications" class="notification-dropdown">
-  <div *ngFor="let reclamation of listReclamations" (click)="navigateToReclamation(reclamation._id)">
+  <div *ngFor="let reclamation of listReclamations" (click)="navigateToReclamation(reclamation._id, reclamation.satisfaction)">
     <div class="notification-item">
       <p>{{ reclamation.title }}</p>
       <p *ngIf="reclamation.satisfaction === '1'" class="text-success">The user is satisfied</p>

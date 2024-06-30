@@ -21,6 +21,8 @@ export class FormReclamationComponent implements OnInit{
   idAdmin: string = "testtest";
   imagePreviewUrl: string | null = null;
 
+  openChat: boolean = false;
+
   listCategorie: CategorieReclamation[] = [];
 
   categorieId!: string;
@@ -53,6 +55,13 @@ export class FormReclamationComponent implements OnInit{
       this.reclamationService.getReclamationByIdRec(id).subscribe((data) => {
         this.populateForm(data);
         this.imagePreviewUrl = data.image;
+
+        console.log("sat", data.satisfaction);
+
+        if(data.satisfaction === "0001") {
+          this.openChat = true;
+        }
+
       });
           
     }

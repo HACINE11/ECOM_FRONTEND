@@ -27,6 +27,7 @@ import { AddCategorieComponent } from './add-categorie/add-categorie.component';
 import { ManagementCategoriesComponent } from './management-categories/management-categories.component';
 import { ListProductsComponent } from './list-products/list-products.component';
 import { AddProductComponent } from './add-product/add-product.component';
+import { CategoryStatisticsComponent } from './category-statistics/category-statistics.component';
 // import { CategorieClientFormComponent } from './pages/categorie-client-form/categorie-client-form.component';
 
 const routes: Routes = [
@@ -128,6 +129,11 @@ const routes: Routes = [
 {
   path: 'change-password/:recoveryCode',
   component: ChangePasswordFormComponent,
+  canActivate: [ AuthGuardService ]
+},
+{
+  path: 'catego',
+  component: CategoryStatisticsComponent,
   canActivate: [ AuthGuardService ]
 },
   {

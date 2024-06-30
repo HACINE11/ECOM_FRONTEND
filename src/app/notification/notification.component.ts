@@ -39,7 +39,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
     // Set interval to reload notifications every 15 seconds
     this.intervalId = setInterval(() => {
       this.loadNotifications();
-    }, 1000);
+    }, 1500);
   }
 
   ngOnDestroy(): void {
@@ -55,6 +55,8 @@ export class NotificationComponent implements OnInit, OnDestroy {
       (data: Reclamation[]) => {
         this.listReclamations = data.filter(reclamation => reclamation.satisfaction !== "0" 
           && reclamation.satisfaction !== "0000" 
+          && reclamation.satisfaction !== "0011" 
+          && reclamation.satisfaction !== "0001" 
         );
         this.notifications = this.listReclamations.length;
         this.numNotifications = this.notifications.toString();
@@ -72,10 +74,15 @@ export class NotificationComponent implements OnInit, OnDestroy {
 
   }
 
-navigateToReclamation(id: string): void {
-  
+navigateToReclamation(id: string, sta: string): void {
 
-    let obj = { satisfaction: "0000"} 
+  let obj: Object = { satisfaction: "0000"} 
+
+  if(sta === "1"){
+     obj = { satisfaction: "0011"} 
+  }else if(sta === "-1"){
+     obj = { satisfaction: "0001"} 
+  }
 
   this.reclamationService.updateReclamationPatch(id, obj).subscribe((data) =>{
    }); 

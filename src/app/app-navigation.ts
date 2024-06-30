@@ -19,6 +19,10 @@ export const navigation = [
       {
         text: 'statistics',
         path: '/sta'
+      },
+      {
+        text: 'statistics category',
+        path: '/catego'
       }
     ]
   },
