@@ -16,18 +16,23 @@ export class LoginFormComponent {
   loading = false;
   formData: any = {};
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { } 
 
-  async onSubmit(e: Event) {
+  onSubmit(e: Event) {
     e.preventDefault();
-    const { email, password } = this.formData;
+    const { email, motPasse } = this.formData;
     this.loading = true;
 
-    const result = await this.authService.logIn(email, password);
-    if (!result.isOk) {
-      this.loading = false;
-      notify(result.message, 'error', 2000);
-    }
+    this.authService.logIn(email, motPasse).subscribe(
+      result => {
+        this.loading = false;
+
+        if (! result.isOk) {
+      
+        notify(result.message, 'error', 2000);
+        } else this.router.navigate(['/home'])
+  }
+    );
   }
 
   onCreateAccountClick = () => {
