@@ -1,19 +1,9 @@
-import { Inject, Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
 
 export interface IUser {
   email: string;
   avatarUrl?: string;
-  nom?: string;
-  prenom?: string;
-  entreprise?: string;
-  matriculeFiscal?: string;
-  address?: string;
-  mobile?: number;
-  role?: string;
 }
 
 const defaultPath = '/';
@@ -24,33 +14,38 @@ const defaultUser = {
 
 @Injectable()
 export class AuthService {
-  private _user: IUser | null = null;
+  private _user: IUser | null = defaultUser;
   get loggedIn(): boolean {
     return !!this._user;
   }
 
   private _lastAuthenticatedPath: string = defaultPath;
-  set lastAuthenticatedPath(value: string) 
-      {
-        this._lastAuthenticatedPath = value;
-      }
-
-  constructor(private router: Router, private http:HttpClient){}
-
-  logIn(email: string, motPasse: string): Observable<any> {
-    return this.http.post<any>('http://localhost:9090/user/signin', { email, motPasse })
-      .pipe( map(response => {
-          this._user = { ...defaultUser, email: response.result.email };
-          localStorage.setItem("token", response.token);
-          this.router.navigate([this._lastAuthenticatedPath]);
-          return { isOk: true, data: this._user };
-        }),
-        catchError(error => {
-          return of({ isOk: false, message: "Authentication failed" });
-        })
-      );
+  set lastAuthenticatedPath(value: string) {
+    this._lastAuthenticatedPath = value;
   }
-  //affichage la liste des utlisateurs 
+
+  constructor(private router: Router) { }
+
+  async logIn(email: string, password: string) {
+
+    try {
+      // Send request
+      this._user = { ...defaultUser, email };
+      this.router.navigate([this._lastAuthenticatedPath]);
+
+      return {
+        isOk: true,
+        data: this._user
+      };
+    }
+    catch {
+      return {
+        isOk: false,
+        message: "Authentication failed"
+      };
+    }
+  }
+
   async getUser() {
     try {
       // Send request
@@ -68,18 +63,21 @@ export class AuthService {
     }
   }
 
-  //sign up 
-  createAccount(email: string, motPasse: string) : Observable<any> {
-    return this.http.post<any>('http://localhost:9090/user/signup', { email, motPasse })
-      .pipe(
-        map(response => {
-          this.router.navigate(['/create-account']);
-          return { isOk: true };
-        }),
-        catchError(error => {
-          return of({ isOk: false, message: "Failed to create account" });
-        })
-      );
+  async createAccount(email: string, password: string) {
+    try {
+      // Send request
+
+      this.router.navigate(['/create-account']);
+      return {
+        isOk: true
+      };
+    }
+    catch {
+      return {
+        isOk: false,
+        message: "Failed to create account"
+      };
+    }
   }
 
   async changePassword(email: string, recoveryCode: string) {
@@ -117,37 +115,12 @@ export class AuthService {
   async logOut() {
     this._user = null;
     this.router.navigate(['/login-form']);
-    localStorage.removeItem("token");
   }
- 
-
-getUserSession(): Observable<any> {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    return of({ isOk: false, data: null });
-  }
-
-  return this.http.get<any>('http://localhost:9090/user/session', {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }).pipe(
-    map(response => {
-      this._user = response;
-      return { isOk: true, data: this._user };
-    }),
-    catchError(error => {
-      return of({ isOk: false, data: null });
-    })
-  );
-}
 }
 
-@Injectable({ providedIn:'root'  })
-
+@Injectable()
 export class AuthGuardService implements CanActivate {
-  
-  constructor( @Inject(Router) private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
     const isLoggedIn = this.authService.loggedIn;
