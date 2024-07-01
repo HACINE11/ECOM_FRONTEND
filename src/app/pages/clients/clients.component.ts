@@ -1,13 +1,14 @@
+
 import { Component, OnInit } from '@angular/core';
 import { Client } from 'src/app/core/models/client';
 import { ClientService } from 'src/app/shared/services';
 import { firstValueFrom } from 'rxjs';
- 
+
 import * as pdfmake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 (pdfmake as any).vfs = pdfFonts.pdfMake.vfs;
- 
+
 @Component({
   selector: 'app-clients',
   templateUrl: './clients.component.html',
@@ -18,7 +19,7 @@ export class ClientsComponent implements OnInit {
   listClientsSearched: Client[] = [];
   client: Client | null = null;
   anciennete: string = '';
- 
+
   // Search criteria
   searchNom: string = '';
   searchPrenom: string = '';
@@ -34,13 +35,13 @@ export class ClientsComponent implements OnInit {
   searchRegion: string = '';
   searchPointFidelite: string = '';
   searchCategorieClientId: string = '';
- 
+
   constructor(private sr: ClientService) {}
- 
+
   ngOnInit() {
     this.getAllClients();
   }
- 
+
   getAllClients() {
     this.sr.getClients().subscribe({
       next: (rec) => {
@@ -78,7 +79,7 @@ export class ClientsComponent implements OnInit {
       error: (e) => alert(e.message),
     });
   }
- 
+
   async calculateAnciennete(clientId: string): Promise<void> {
     try {
       const response = await firstValueFrom(this.sr.calculateAnciennete(clientId));
@@ -89,7 +90,8 @@ export class ClientsComponent implements OnInit {
       alert('An error occurred while calculating anciennete');
     }
   }
- 
+
+  
  
   exportClientsToPDF() {
     this.sr.getClients().subscribe(clients => {
@@ -112,7 +114,7 @@ export class ClientsComponent implements OnInit {
           { text: '\n' }
         ];
       });
- 
+
       const documentDefinition = {
         content: [
           { text: 'Liste des Clients Plateforme E-MLIHA', fontSize: 25, alignment: 'center', color: 'red', margin: [0, 0, 0, 20] },
@@ -123,7 +125,7 @@ export class ClientsComponent implements OnInit {
           content: { fontSize: 10 }
         }
       };
- 
+
       pdfMake.createPdf(documentDefinition).download('clients.pdf');
     });
   }

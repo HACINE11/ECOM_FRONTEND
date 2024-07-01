@@ -80,19 +80,19 @@
     <form [formGroup]="cclientForm" (ngSubmit)="onSubmit()">
         
       <div>
-        <input type="txt" id="libelleCatCl" formControlName="libelleCatCl" placeholder="libelleCatCl">
+        <input type="txt" id="libelleCatCl" formControlName="libelleCatCl" placeholder="LibelleCatCl *">
         <div *ngIf="cclientForm.get('libelleCatCl')?.invalid && cclientForm.get('libelleCatCl')?.touched">
           Le libelleCatCl est requis.
         </div>
       </div>
       <div>
-        <input type="txt" id="descriptionCatCl" formControlName="descriptionCatCl" placeholder="descriptionCatCl">
+        <input type="txt" id="descriptionCatCl" formControlName="descriptionCatCl" placeholder="DescriptionCatCl *">
         <div *ngIf="cclientForm.get('descriptionCatCl')?.invalid && cclientForm.get('descriptionCatCl')?.touched">
           Le descriptionCatCl est requis.
         </div>
       </div>
       
-        <input type="number" id="promotionCatCl" formControlName="promotionCatCl" placeholder=" promotionCatCl">
+        <input type="number" id="promotionCatCl" formControlName="promotionCatCl" placeholder=" PromotionCatCl *">
         <div *ngIf="cclientForm.get('promotionCatCl')?.invalid && cclientForm.get('promotionCatCl')?.touched">
           Le  promotionCatCl est requis.
         </div>
