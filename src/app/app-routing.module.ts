@@ -7,6 +7,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
 import { DxDataGridModule, DxFormModule } from 'devextreme-angular';
 
+
 const routes: Routes = [
   {
     path: 'tasks',
@@ -24,7 +25,7 @@ const routes: Routes = [
     canActivate: [ AuthGuardService ]
   },
   {
-    path: 'login-form',
+    path: 'login-form', 
     component: LoginFormComponent,
     canActivate: [ AuthGuardService ]
   },
@@ -39,14 +40,12 @@ const routes: Routes = [
     canActivate: [ AuthGuardService ]
   },
   {
-    path: 'change-password/:recoveryCode',
+    path: 'change-password/:token',
     component: ChangePasswordFormComponent,
-    canActivate: [ AuthGuardService ]
+    canActivate: [ AuthGuardService]
   },
   {
-    path: '**',
-    redirectTo: 'home'
-  }
+    path: '**', redirectTo: 'home'  }
 ];
 
 @NgModule({
