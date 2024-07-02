@@ -1,6 +1,6 @@
 import { Inject, Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
+import { CanActivateFn, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
@@ -25,9 +25,7 @@ const defaultUser = {
 @Injectable()
 export class AuthService {
   private _user: IUser | null = null;
-  get loggedIn(): boolean {
-    return !!this._user;
-  }
+  get loggedIn(): boolean {  return !!this._user; }
 
   private _lastAuthenticatedPath: string = defaultPath;
   set lastAuthenticatedPath(value: string) 
@@ -82,45 +80,36 @@ export class AuthService {
       );
   }
 
-  async changePassword(email: string, recoveryCode: string) {
-    try {
-      // Send request
-
-      return {
-        isOk: true
-      };
-    }
-    catch {
-      return {
-        isOk: false,
-        message: "Failed to change password"
-      }
-    }
+  resetPassword(email: string): Observable<any> {
+    return this.http.post<any>('http://localhost:9090/user/forgetpassword', { email })
+      .pipe(
+        map(response => {
+          return { isOk: true, message: 'Recovery email sent' };
+        }),
+        catchError(error => {
+          return of({ isOk: false, message: 'Failed to reset password' });
+        })
+      );
+  }
+  changePassword(token: string, newPassword: string): Observable<any> {
+    return this.http.post<any>('http://localhost:9090/user/resetpassword', { token, newPassword })
+      .pipe(
+        map(response => {
+          return { isOk: true, message: 'Password has been reset' };
+        }),
+        catchError(error => {
+          return of({ isOk: false, message: 'Error resetting password' });
+        })
+      );
   }
 
-  async resetPassword(email: string) {
-    try {
-      // Send request
-
-      return {
-        isOk: true
-      };
-    }
-    catch {
-      return {
-        isOk: false,
-        message: "Failed to reset password"
-      };
-    }
-  }
-
+ 
   async logOut() {
     this._user = null;
     this.router.navigate(['/login-form']);
     localStorage.removeItem("token");
   }
  
-
 getUserSession(): Observable<any> {
   const token = localStorage.getItem('token');
   if (!token) {
@@ -145,11 +134,13 @@ getUserSession(): Observable<any> {
 
 @Injectable({ providedIn:'root'  })
 
-export class AuthGuardService implements CanActivate {
+export class AuthGuardService {
+  //private router = inject(Router);
+  //private authService = inject(AuthService);
   
   constructor( @Inject(Router) private router: Router, private authService: AuthService) { }
 
-  canActivate(route: ActivatedRouteSnapshot): boolean {
+  canActivate: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
     const isLoggedIn = this.authService.loggedIn;
     const isAuthForm = [
       'login-form',
@@ -172,6 +163,5 @@ export class AuthGuardService implements CanActivate {
       this.authService.lastAuthenticatedPath = route.routeConfig?.path || defaultPath;
     }
 
-    return isLoggedIn || isAuthForm;
-  }
+    return isLoggedIn || isAuthForm;  }
 }

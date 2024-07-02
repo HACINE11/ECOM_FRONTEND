@@ -16,7 +16,7 @@ export class LoginFormComponent {
   loading = false;
   formData: any = {};
 
-  constructor(private authService: AuthService, private router: Router) { } 
+  constructor(private authService: AuthService, private router: Router) { }
 
   onSubmit(e: Event) {
     e.preventDefault();
@@ -35,9 +35,7 @@ export class LoginFormComponent {
     );
   }
 
-  onCreateAccountClick = () => {
-    this.router.navigate(['/create-account']);
-  }
+  onCreateAccountClick = () => { this.router.navigate(['/create-account']); }
 }
 @NgModule({
   imports: [
