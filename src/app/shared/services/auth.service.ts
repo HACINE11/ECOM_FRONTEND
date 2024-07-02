@@ -130,7 +130,20 @@ getUserSession(): Observable<any> {
     })
   );
 }
+
+getUserProfile(id: string): Observable<any> { 
+      return this.http.get<any>('http://localhost:9090/user/' + id).pipe(map(response => response),catchError(error => 
+        {console.error('Error fetching profile:', error);
+          throw error;
+        })    );  }
+
+
+updateUserProfile(id: string, user: IUser): Observable<any> {
+          return this.http.put<void>(`http://localhost:9090/user/${id}`, user).pipe(map(response => response),
+          catchError(error => { console.error('Error updating profile:', error); throw error; }) );
+         } 
 }
+
 
 @Injectable({ providedIn:'root'  })
 
