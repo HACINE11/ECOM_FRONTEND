@@ -15,22 +15,25 @@ import { AuthService } from '../../services';
 export class ChangePasswordFormComponent implements OnInit {
   loading = false;
   formData: any = {};
-  recoveryCode: string = '';
+  recoveryCode: any = '' || null;
 
   constructor(private authService: AuthService, 
               private router: Router, 
-              private route: ActivatedRoute) { }
+              private Acroute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.queryParamMap.subscribe(params => {
-      this.recoveryCode = params.get('token') || '';
+    this.recoveryCode=  this.Acroute.snapshot.paramMap.get('token');
+    this.Acroute.queryParamMap.subscribe(params => {
+  //    this.recoveryCode = params.get('token') || '';
     });
   }
 
   onSubmit(e: Event) {
     e.preventDefault();
+
     const { motPasse } = this.formData;
     this.loading = true;
+    console.log(motPasse, this.recoveryCode)
 
     this.authService.changePassword(this.recoveryCode, motPasse).subscribe(result => {
       this.loading = false;

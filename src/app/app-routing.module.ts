@@ -129,7 +129,7 @@ const routes: Routes = [
 {
   path: 'change-password/:token',
   component: ChangePasswordFormComponent,
-  canActivate: [ AuthGuardService ]
+  //canActivate: [ AuthGuardService ]
 },
 {
   path: 'catego',

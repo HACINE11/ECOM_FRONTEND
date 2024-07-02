@@ -4,7 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { Reclamation } from '../models/reclamation';
 import { ReclamationService } from '../services/reclamation.service'; 
 
-import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+//import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 
 @Component({
   selector: 'app-statistics',
