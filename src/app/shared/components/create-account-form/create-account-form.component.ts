@@ -39,7 +39,7 @@ export class CreateAccountFormComponent {
       if (!result.isOk) {
         notify(result.message, 'error', 2000);
       } else {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/verify-email']);
       }
     });
   }

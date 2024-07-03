@@ -138,8 +138,7 @@ const routes: Routes = [
 },
 {
   path: 'verify-email',
-  component: VerifyEmailComponent,
-  canActivate: [ AuthGuardService ]
+  component: VerifyEmailComponent
 },
 {
   path: 'change-password/:token',

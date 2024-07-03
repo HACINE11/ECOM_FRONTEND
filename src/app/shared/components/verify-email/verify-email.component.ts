@@ -16,8 +16,8 @@ export class VerifyEmailComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  onSubmit(e: Event) {
-    e.preventDefault();
+  onSubmit() {
+   // e.preventDefault();
     const { email, code } = this.formData;
     this.loading = true;
 
