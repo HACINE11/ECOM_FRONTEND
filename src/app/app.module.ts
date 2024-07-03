@@ -50,6 +50,7 @@ import { StaticscComponent } from './pages/staticsc/staticsc.component';
 import { CategoryStatisticsComponent } from './category-statistics/category-statistics.component';
 import { VerifyEmailComponent } from './shared/components/verify-email/verify-email.component';
 
+import { ListCategoryComponent } from './list-category/list-category.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { VerifyEmailComponent } from './shared/components/verify-email/verify-em
     AddCategorieComponent,
     ListProductsComponent,
     ManagementCategoriesComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    ListCategoryComponent
     
     
   ],

@@ -1,19 +1,31 @@
-<div class="container"><br><br>
-    <h5 class="mt-5 mb-3"> Add a new Category </h5>
-
+<div class="container">
+    <br><br>
+    <h5 class="mt-5 mb-3">Add a new Category</h5>
+  
     <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
-    
-        <div class="form-group">
-            <label for="title" class="control-label"> Libelle Categorie </label>
-            <input type="text" class="form-control" id="title" placeholder="Enter title" formControlName="libelleCategorie" >
+      <div class="form-group">
+        <label for="libelleCategorie" class="control-label">Libelle Categorie</label>
+        <input type="text" class="form-control" id="libelleCategorie" placeholder="Enter Libelle Categorie" formControlName="libelleCategorie">
+        <div *ngIf="libelleCategorie?.touched && libelleCategorie?.invalid" class="text-danger">
+          <small *ngIf="libelleCategorie?.errors?.['required']">Libelle Categorie is required.</small>
+          <small *ngIf="libelleCategorie?.errors?.['minlength']">Libelle Categorie must be at least 3 characters long.</small>
+          <small *ngIf="libelleCategorie?.errors?.['maxlength']">Libelle Categorie cannot be more than 50 characters long.</small>
+          <small *ngIf="libelleCategorie?.errors?.['pattern']">Libelle Categorie can only contain letters and spaces.</small>
         </div>
-
-        <div class="form-group">
-            <label for="description" class="control-label description-label">Description</label>
-            <textarea class="form-control" id="description" rows="5" placeholder="Enter a detailed description" formControlName="description"></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label for="description" class="control-label description-label">Description</label>
+        <textarea class="form-control" id="description" rows="5" placeholder="Enter a detailed description" formControlName="description"></textarea>
+        <div *ngIf="description?.touched && description?.invalid" class="text-danger">
+          <small *ngIf="description?.errors?.['required']">Description is required.</small>
+          <small *ngIf="description?.errors?.['minlength']">Description must be at least 20 characters long.</small>
+          <small *ngIf="description?.errors?.['maxlength']">Description cannot be more than 500 characters long.</small>
+          <small *ngIf="description?.errors?.['pattern']">Description contains invalid characters.</small>
         </div>
-
-        <button class="btn btn-primary" type="submit" [disabled]="categoryForm.invalid">submit</button>
-
+      </div>
+  
+      <button class="btn btn-primary" type="submit" [disabled]="categoryForm.invalid">Submit</button>
     </form>
-</div>
+  </div>
+  

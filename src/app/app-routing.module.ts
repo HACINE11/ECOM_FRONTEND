@@ -29,6 +29,7 @@ import { ListProductsComponent } from './list-products/list-products.component';
 import { AddProductComponent } from './add-product/add-product.component';
 import { CategoryStatisticsComponent } from './category-statistics/category-statistics.component';
 import { VerifyEmailComponent } from './shared/components/verify-email/verify-email.component';
+import { ListCategoryComponent } from './list-category/list-category.component';
 // import { CategorieClientFormComponent } from './pages/categorie-client-form/categorie-client-form.component';
 
 const routes: Routes = [
@@ -58,7 +59,6 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [AuthGuardService],
   },
-
   {
     path:"listRec",    
     component: ListReclamationComponent,
@@ -72,8 +72,17 @@ const routes: Routes = [
     component: CategoryComponent,
     canActivate: [ AuthGuardService ]
   },
+  { path:"addCat/:id", 
+    component: CategoryComponent,
+    canActivate: [ AuthGuardService ]
+  },
   { path:"sta", 
     component: StatisticsComponent,
+    canActivate: [ AuthGuardService ]
+  },
+  {
+    path: 'listCat',
+    component: ListCategoryComponent,
     canActivate: [ AuthGuardService ]
   },
   {
