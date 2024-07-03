@@ -58,7 +58,6 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [AuthGuardService],
   },
-
   {
     path:"listRec",    
     component: ListReclamationComponent,
@@ -72,8 +71,17 @@ const routes: Routes = [
     component: CategoryComponent,
     canActivate: [ AuthGuardService ]
   },
+  { path:"addCat/:id", 
+    component: CategoryComponent,
+    canActivate: [ AuthGuardService ]
+  },
   { path:"sta", 
     component: StatisticsComponent,
+    canActivate: [ AuthGuardService ]
+  },
+  {
+    path: 'listCat',
+    component: ListCategoryComponent,
     canActivate: [ AuthGuardService ]
   },
   {
@@ -131,11 +139,6 @@ const routes: Routes = [
   path: 'change-password/:token',
   component: ChangePasswordFormComponent,
   //canActivate: [ AuthGuardService ]
-},
-{
-  path: 'listCat',
-  component: ListCategoryComponent,
-  canActivate: [ AuthGuardService ]
 },
 {
   path: 'catego',
