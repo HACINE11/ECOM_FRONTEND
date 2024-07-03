@@ -21,6 +21,10 @@ export const navigation = [
         path: '/sta'
       },
       {
+        text: 'list category',
+        path: '/listCat'
+      },
+      {
         text: 'statistics category',
         path: '/catego'
       }

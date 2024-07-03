@@ -48,6 +48,7 @@ import { CategorieClientFormComponent } from './pages/categorie-client-form/cate
 import { CategorieClientsComponent } from './pages/categorie-clients/categorie-clients.component';
 import { StaticscComponent } from './pages/staticsc/staticsc.component';
 import { CategoryStatisticsComponent } from './category-statistics/category-statistics.component';
+import { ListCategoryComponent } from './list-category/list-category.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { CategoryStatisticsComponent } from './category-statistics/category-stat
     AddProductComponent,
     AddCategorieComponent,
     ListProductsComponent,
-    ManagementCategoriesComponent
+    ManagementCategoriesComponent,
+    ListCategoryComponent
     
     
   ],

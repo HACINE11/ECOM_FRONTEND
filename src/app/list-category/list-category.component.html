@@ -1,0 +1,29 @@
+<div class="container">     
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Libelle Categorie</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="clickable-row" *ngFor="let listCategory of listCategorys" (click)="onRowClick(listCategory._id)">
+                <td><a [routerLink]="['/addCat', listCategory._id]">{{listCategory.libelleCategorie}}</a></td>
+                <td>
+                    <!--
+                    -->
+                    <button class="btn btn-sm btn-danger mx-1" (click)="deleteApartment(listCategory._id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <ul *ngIf="listCategorys.length; else noReclamation">
+    
+    </ul>
+    
+    
+    <ng-template #noReclamation>
+        <p>No noReclamation available.</p>
+    </ng-template>
+    
+    </div>

@@ -53,6 +53,9 @@ export class ReclamationService {
         return this.http.post<void>(this.apiUrlCategoRec, category);
       }
       
+      getCategorieById(id: string): Observable<Reclamation> {
+        return this.http.get<Reclamation>(this.apiUrlCategoRec+ id);
+      }
 
 
 }
