@@ -48,6 +48,8 @@ import { CategorieClientFormComponent } from './pages/categorie-client-form/cate
 import { CategorieClientsComponent } from './pages/categorie-clients/categorie-clients.component';
 import { StaticscComponent } from './pages/staticsc/staticsc.component';
 import { CategoryStatisticsComponent } from './category-statistics/category-statistics.component';
+import { VerifyEmailComponent } from './shared/components/verify-email/verify-email.component';
+
 
 @NgModule({
   declarations: [
@@ -65,7 +67,8 @@ import { CategoryStatisticsComponent } from './category-statistics/category-stat
     AddProductComponent,
     AddCategorieComponent,
     ListProductsComponent,
-    ManagementCategoriesComponent
+    ManagementCategoriesComponent,
+    VerifyEmailComponent
     
     
   ],
@@ -93,7 +96,7 @@ import { CategoryStatisticsComponent } from './category-statistics/category-stat
     AuthService,
     ScreenService,
     AppInfoService,
-    ClientService, // Ajout de ClientService dans les providers
+    ClientService, 
   ],
   bootstrap: [AppComponent]
 })

@@ -28,6 +28,7 @@ import { ManagementCategoriesComponent } from './management-categories/managemen
 import { ListProductsComponent } from './list-products/list-products.component';
 import { AddProductComponent } from './add-product/add-product.component';
 import { CategoryStatisticsComponent } from './category-statistics/category-statistics.component';
+import { VerifyEmailComponent } from './shared/components/verify-email/verify-email.component';
 // import { CategorieClientFormComponent } from './pages/categorie-client-form/categorie-client-form.component';
 
 const routes: Routes = [
@@ -124,6 +125,11 @@ const routes: Routes = [
 {
   path: 'create-account',
   component: CreateAccountFormComponent,
+  canActivate: [ AuthGuardService ]
+},
+{
+  path: 'verify-email',
+  component: VerifyEmailComponent,
   canActivate: [ AuthGuardService ]
 },
 {

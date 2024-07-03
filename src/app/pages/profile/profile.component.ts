@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { jwtDecode } from 'jwt-decode';
+import notify from 'devextreme/ui/notify';
 
 export interface IUser {
   email: string;
@@ -12,6 +13,7 @@ export interface IUser {
   address?: string;
   mobile?: number;
   role?: string;
+  
 }
 
 @Component({
@@ -21,10 +23,10 @@ export interface IUser {
 })
 
 export class ProfileComponent implements OnInit {
-  _user!: IUser;
+  user:Partial <IUser>= {};
   colCountByScreen: object;
-
   idUser!: string;
+  loading = false;
 
   constructor(private authService: AuthService) {
     this.colCountByScreen = {
@@ -45,8 +47,15 @@ export class ProfileComponent implements OnInit {
         
 
         this.authService.getUserProfile(this.idUser).subscribe(data => {
-          this._user = data;
-          console.log('PROFILE USER', this._user);
+          this.user= {
+
+            nom:data.nom,
+            prenom: data.prenom,
+            entreprise: data.entreprise,
+            address: data.address,
+            mobile: data.mobile
+          }
+           //console.log('affiche PROFILE USER', this.user);
         });
       } catch (error) {
         console.error('Error decoding token:', error);
@@ -56,11 +65,20 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-
-  updateUser(){
-    this.authService.updateUserProfile(this.idUser, this._user ).subscribe(data => {
-      console.log("data", data);
-    })
+  updateUser() {
+    this.loading = true;
+    this.authService.updateUserProfile(this.idUser, this.user).subscribe(
+      data => {
+        this.loading = false;
+        //console.log('Updated user data:', data);
+        notify('Profile updated successfully', 'success', 2000);
+      },
+      error => {
+        this.loading = false;
+        console.error('Error updating profile:', error);
+        notify('Error updating profile', 'error', 2000);
+      }
+    );
   }
 }
 

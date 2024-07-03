@@ -66,12 +66,12 @@ export class AuthService {
     }
   }
 
-  //sign up 
-  createAccount(email: string, motPasse: string) : Observable<any> {
-    return this.http.post<any>('http://localhost:9090/user/signup', { email, motPasse })
+  //sign up nouveau admin
+  createAccount(nom: string, prenom: string, email: string, motPasse: string, address:string, mobile:number) : Observable<any> {
+    return this.http.post<any>('http://localhost:9090/user/signup', { nom, prenom, email, motPasse, address, mobile })
       .pipe(
         map(response => {
-          this.router.navigate(['/create-account']);
+          this.router.navigate(['/verify-email']);
           return { isOk: true };
         }),
         catchError(error => {
@@ -79,6 +79,21 @@ export class AuthService {
         })
       );
   }
+
+  
+  verifyAccount(email: string, code: string): Observable<any> {
+    return this.http.post<any>('http://localhost:9090/user/verify', { email, code })
+      .pipe(
+        map(response => {
+          this.router.navigate(['/login']);
+          return { isOk: true };
+        }),
+        catchError(error => {
+          return of({ isOk: false, message: "Failed to verify account" });
+        })
+      );
+  }
+
 
   resetPassword(email: string): Observable<any> {
     return this.http.post<any>('http://localhost:9090/user/forgetpassword', { email })
@@ -103,7 +118,7 @@ export class AuthService {
       );
   }
 
- 
+
   async logOut() {
     this._user = null;
     this.router.navigate(['/login-form']);
@@ -138,8 +153,8 @@ getUserProfile(id: string): Observable<any> {
         })    );  }
 
 
-updateUserProfile(id: string, user: IUser): Observable<any> {
-          return this.http.put<void>(`http://localhost:9090/user/${id}`, user).pipe(map(response => response),
+updateUserProfile(id: string, data: Partial<IUser>): Observable<any> {
+          return this.http.put<void>(`http://localhost:9090/user/${id}`, data).pipe(map(response => response),
           catchError(error => { console.error('Error updating profile:', error); throw error; }) );
          } 
 }
@@ -148,9 +163,7 @@ updateUserProfile(id: string, user: IUser): Observable<any> {
 @Injectable({ providedIn:'root'  })
 
 export class AuthGuardService {
-  //private router = inject(Router);
-  //private authService = inject(AuthService);
-  
+ 
   constructor( @Inject(Router) private router: Router, private authService: AuthService) { }
 
   canActivate: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
@@ -158,8 +171,10 @@ export class AuthGuardService {
     const isAuthForm = [
       'login-form',
       'reset-password',
+      'verify-email',
       'create-account',
       'change-password/:recoveryCode'
+      
     ].includes(route.routeConfig?.path || defaultPath);
 
     if (isLoggedIn && isAuthForm) {

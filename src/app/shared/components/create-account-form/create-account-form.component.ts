@@ -27,14 +27,14 @@ export class CreateAccountFormComponent {
 
  onSubmit(e: Event) {
     e.preventDefault();
-    const { email, motPasse, confirmedPassword } = this.formData;
+    const { nom, prenom,email, motPasse, confirmedPassword, address, mobile } = this.formData;
     if (motPasse !== confirmedPassword) {
       notify('!!! Passwords do not match', 'error', 2000);
       return;
     }
        
     this.loading = true;
-    this.authService.createAccount(email, motPasse).subscribe(result => {
+    this.authService.createAccount(nom, prenom, email, motPasse, address, mobile ).subscribe(result => {
       this.loading = false;
       if (!result.isOk) {
         notify(result.message, 'error', 2000);
