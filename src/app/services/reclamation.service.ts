@@ -49,7 +49,7 @@ export class ReclamationService {
         return this.http.get<CategorieReclamation[]>(this.apiUrlCategoRec);
       }
 
-      addReclamation(category: CategorieReclamation): Observable<void> {
+      addCategorieRec(category: CategorieReclamation): Observable<void> {
         return this.http.post<void>(this.apiUrlCategoRec, category);
       }
       
