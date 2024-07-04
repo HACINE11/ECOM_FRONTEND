@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Categorieclient } from 'src/app/core/models/categorieclient';
 import { CategorieClientService, ClientService } from 'src/app/shared/services';
+import { noNumbersValidator } from 'src/app/shared/no-numbers.validator';
+
+
 @Component({
   selector: 'app-categorie-client-form',
   templateUrl: './categorie-client-form.component.html',
@@ -23,8 +26,9 @@ export class CategorieClientFormComponent implements OnInit{
       private ar: ActivatedRoute,
     ) {
       this.cclientForm = this.fb.group({
-        libelleCatCl: ['', Validators.required],
-        descriptionCatCl: ['', Validators.required],
+        libelleCatCl: ['', [Validators.required,noNumbersValidator]],
+
+        descriptionCatCl: ['',[ Validators.required,noNumbersValidator]],
         promotionCatCl: ['', Validators.required],
         
         

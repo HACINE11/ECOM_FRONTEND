@@ -15,4 +15,5 @@ export class StatisticsService {
   getClientStatistics(): Observable<any> {
     return this.http.get<any>(this.apiUrlClient);
   }
+ 
 }

@@ -31,14 +31,14 @@ import {
   ChangePasswordFormModule,
   LoginFormModule,
 } from './shared/components';
-import { UnauthenticatedContentModule } from './unauthenticated-content';
-import { AppRoutingModule } from './app-routing.module';
 import { AddProductComponent } from './add-product/add-product.component';
 import { AddCategorieComponent } from './add-categorie/add-categorie.component';
 import { ListProductsComponent } from './list-products/list-products.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ManagementCategoriesComponent } from './management-categories/management-categories.component';
+import { UnauthenticatedContentModule } from './unauthenticated-content';
+import { AppRoutingModule } from './app-routing.module';
 
 import { ClientsComponent } from './pages/clients/clients.component';
 import { ClientFormComponent } from './pages/client-form/client-form.component';
@@ -70,8 +70,9 @@ import { ListCategoryComponent } from './list-category/list-category.component';
     ListProductsComponent,
     ManagementCategoriesComponent,
     VerifyEmailComponent,
-    ListCategoryComponent
+    ListCategoryComponent,
     
+    StatisticsComponent
     
   ],
   imports: [
@@ -93,12 +94,13 @@ import { ListCategoryComponent } from './list-category/list-category.component';
     CanvasJSAngularChartsModule,
     NgChartsModule,
     CommonModule
+    
   ],
   providers: [
     AuthService,
     ScreenService,
     AppInfoService,
-    ClientService, 
+    ClientService
   ],
   bootstrap: [AppComponent]
 })

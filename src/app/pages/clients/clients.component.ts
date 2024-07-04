@@ -97,6 +97,8 @@ export class ClientsComponent implements OnInit {
     this.sr.getClients().subscribe(clients => {
       const clientDetails = clients.map(client => {
         return [
+          { text: '**************************************************************************************************\n' },
+
           { text: 'Nom: ' + (client.nom || 'N/A'), style: 'header', color: 'blue' },
           { text: 'Prénom: ' + (client.prenom || 'N/A'), style: 'header', color: 'blue' },
           { text: 'Email: ' + (client.email || 'N/A'), style: 'header', color: 'blue' },
