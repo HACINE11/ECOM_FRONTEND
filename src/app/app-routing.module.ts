@@ -150,6 +150,12 @@ const routes: Routes = [
   component: CategoryStatisticsComponent,
   canActivate: [ AuthGuardService ]
 },
+// ***************************
+  // {
+  //   path: 'change-password/:recoveryCode',
+  //   component: ChangePasswordFormComponent,
+  //   canActivate: [ AuthGuardService ]
+  // },
   {
     path: '**',
     redirectTo: 'home',
