@@ -79,6 +79,7 @@ const routes: Routes = [
   component: StatisticsComponent,
   canActivate: [ AuthGuardService ]
 },
+// ***************************
   // {
   //   path: 'change-password/:recoveryCode',
   //   component: ChangePasswordFormComponent,
