@@ -46,18 +46,18 @@ import { ClientFormComponent } from './pages/client-form/client-form.component';
 import { CategorieClientFormComponent } from './pages/categorie-client-form/categorie-client-form.component';
 // import { PagescategorieClientsComponent } from './pagescategorie-clients/pagescategorie-clients.component';
 import { CategorieClientsComponent } from './pages/categorie-clients/categorie-clients.component';
-import { StaticscComponent } from './pages/staticsc/staticsc.component';
 import { CategoryStatisticsComponent } from './category-statistics/category-statistics.component';
 import { VerifyEmailComponent } from './shared/components/verify-email/verify-email.component';
 
 import { ListCategoryComponent } from './list-category/list-category.component';
+import { StaticscComponent } from './pages/staticsc/staticsc.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     ListReclamationComponent,
     FormReclamationComponent,
-    StatisticsComponent,
     CategoryComponent,
     ModalComponent,
     ClientsComponent,
@@ -71,7 +71,6 @@ import { ListCategoryComponent } from './list-category/list-category.component';
     ManagementCategoriesComponent,
     VerifyEmailComponent,
     ListCategoryComponent,
-    
     StatisticsComponent
     
   ],

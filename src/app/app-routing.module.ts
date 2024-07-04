@@ -21,6 +21,7 @@ import { ClientsComponent } from './pages/clients/clients.component';
 import { ClientFormComponent } from './pages/client-form/client-form.component';
 import { CategorieClientsComponent } from './pages/categorie-clients/categorie-clients.component';
 import { CategorieClientFormComponent } from './pages/categorie-client-form/categorie-client-form.component';
+
 import { StaticscComponent } from './pages/staticsc/staticsc.component';
 
 import { AddCategorieComponent } from './add-categorie/add-categorie.component';
