@@ -84,11 +84,17 @@
         <div *ngIf="cclientForm.get('libelleCatCl')?.invalid && cclientForm.get('libelleCatCl')?.touched">
           Le libelleCatCl est requis.
         </div>
+        <div *ngIf="cclientForm.get('libelleCatCl')?.errors?.['hasNumber']">
+          Le libelleCatCl ne doit pas contenir de chiffres.
+        </div>
       </div>
       <div>
         <input type="txt" id="descriptionCatCl" formControlName="descriptionCatCl" placeholder="DescriptionCatCl *">
         <div *ngIf="cclientForm.get('descriptionCatCl')?.invalid && cclientForm.get('descriptionCatCl')?.touched">
           Le descriptionCatCl est requis.
+        </div>
+        <div *ngIf="cclientForm.get('descriptionCatCl')?.errors?.['hasNumber']">
+          Le descriptionCatCl ne doit pas contenir de chiffres.
         </div>
       </div>
       

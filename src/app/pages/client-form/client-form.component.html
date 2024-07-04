@@ -115,6 +115,9 @@
         <div *ngIf="clientForm.get('email')?.invalid && clientForm.get('email')?.touched">
           Un email valide est requis.
         </div>
+        <div *ngIf="clientForm.get('email')?.hasError('emailExists') && clientForm.get('email')?.touched">
+          Cette email est déjà utilisée.
+        </div>
       </div>
       <!-- ******************************************************************************** -->
       <div>
