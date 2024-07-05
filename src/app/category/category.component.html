@@ -1,6 +1,6 @@
 <div class="container">
     <br><br>
-    <h5 class="mt-5 mb-3">Add a new Category</h5>
+    <h5 class="mt-5 mb-3">{{ title }}</h5>
   
     <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
@@ -25,7 +25,7 @@
         </div>
       </div>
   
-      <button class="btn btn-primary" type="submit" [disabled]="categoryForm.invalid">Submit</button>
+      <button class="btn btn-primary" type="submit" [disabled]="categoryForm.invalid">Envoyer</button>
     </form>
   </div>
   

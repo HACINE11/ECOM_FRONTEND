@@ -33,7 +33,12 @@ export class ListCategoryComponent implements OnInit{
 }
 
 deleteApartment(id: string){
-
+  alert("do you want to delete this category");
+  this.categoryService.deleteCategorie(id).subscribe(data => {
+    this.router.navigate(['/listCat']);
+    
+  });
+  
 }
 
 }

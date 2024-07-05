@@ -57,5 +57,12 @@ export class ReclamationService {
         return this.http.get<Reclamation>(this.apiUrlCategoRec+ id);
       }
 
+      deleteCategorie(id: string): Observable<void> {
+        return this.http.delete<void>(this.apiUrlCategoRec + id);
+      }
+
+      updateCategorie(id: string, obj: object){
+        return this.http.put<void>(this.apiUrlCategoRec + id, obj);
+      }
 
 }

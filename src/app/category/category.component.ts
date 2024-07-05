@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ReclamationService } from '../services/reclamation.service';
 import { CategorieReclamation } from '../models/categorie-reclamation';
 
@@ -12,10 +12,14 @@ import { CategorieReclamation } from '../models/categorie-reclamation';
 export class CategoryComponent implements OnInit {
   categoryForm: FormGroup = new FormGroup({});
 
+  title: string = "ajouter une categorie";
+  
+
   constructor(
     private formBuilder: FormBuilder,
     private reclamationService: ReclamationService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +43,14 @@ export class CategoryComponent implements OnInit {
         ]
       ]
     });
+
+    let id = this.activatedRoute.snapshot.params['id'];
+
+    console.log(id);
+    if(id){
+        this.title = "mettre a jour une categorie";
+    }
+
   }
 
   get libelleCategorie(): AbstractControl | null {
@@ -50,8 +62,16 @@ export class CategoryComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.categoryForm.valid) {
+
+    let id = this.activatedRoute.snapshot.params['id'];
+
+    if(this.categoryForm.valid){
       const category: CategorieReclamation = this.categoryForm.value;
+      
+      if(id){
+
+      }else {
+     
 
       this.reclamationService.addCategorieRec(category).subscribe(
         (data) => {
@@ -64,8 +84,16 @@ export class CategoryComponent implements OnInit {
           alert('Failed to add Category');
         }
       );
-    } else {
-      this.categoryForm.markAllAsTouched(); // Mark all fields as touched to display validation messages
+      }
+    }else {
+      this.categoryForm.markAllAsTouched(); 
     }
+
+
+
+
   }
+
+
+  
 }
