@@ -13,29 +13,39 @@ import { AuthService } from '../../services';
   templateUrl: './create-account-form.component.html',
   styleUrls: ['./create-account-form.component.scss']
 })
+
 export class CreateAccountFormComponent {
+  
   loading = false;
-  formData: any = {};
+  formData: any = {
+    email: '',
+    motPasse: '',
+    confirmedPassword: ''
+  };
 
   constructor(private authService: AuthService, private router: Router) { }
 
-  async onSubmit(e: Event) {
+ onSubmit(e: Event) {
     e.preventDefault();
-    const { email, password } = this.formData;
-    this.loading = true;
-
-    const result = await this.authService.createAccount(email, password);
-    this.loading = false;
-
-    if (result.isOk) {
-      this.router.navigate(['/login-form']);
-    } else {
-      notify(result.message, 'error', 2000);
+    const { nom, prenom,email, motPasse, confirmedPassword, address, mobile } = this.formData;
+    if (motPasse !== confirmedPassword) {
+      notify('!!! Passwords do not match', 'error', 2000);
+      return;
     }
+       
+    this.loading = true;
+    this.authService.createAccount(nom, prenom, email, motPasse, address, mobile ).subscribe(result => {
+      this.loading = false;
+      if (!result.isOk) {
+        notify(result.message, 'error', 2000);
+      } else {
+        this.router.navigate(['/verify-email']);
+      }
+    });
   }
 
-  confirmPassword = (e: ValidationCallbackData) => {
-    return e.value === this.formData.password;
+  confirmPassword = (e: any) => {
+    return e.value === this.formData.motPasse;
   }
 }
 @NgModule({

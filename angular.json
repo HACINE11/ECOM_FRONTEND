@@ -45,6 +45,14 @@
             "polyfills": [
               "zone.js"
             ],
+            "allowedCommonJsDependencies": [
+  "jszip",
+  "devexpress-diagram",
+  "devexpress-gantt",
+  "devextreme-quill",
+  "pdfmake/build/pdfmake",
+  "pdfmake/build/vfs_fonts"
+],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -52,7 +60,9 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/devextreme/dist/css/dx.common.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/themes/generated/theme.base.css",
               "src/themes/generated/theme.additional.css",
               "src/dx-styles.scss",

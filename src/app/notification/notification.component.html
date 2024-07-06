@@ -1,0 +1,17 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<button type="button" class="icon-button" (click)="toggleNotifications()">
+  <span class="material-icons">notifications</span>
+  <span class="{{ redNotification }}">{{ numNotifications }}</span>
+</button>
+
+<div *ngIf="showNotifications" class="notification-dropdown">
+  <div *ngFor="let reclamation of listReclamations" (click)="navigateToReclamation(reclamation._id, reclamation.satisfaction)">
+    <div class="notification-item">
+      <p>{{ reclamation.title }}</p>
+      <p *ngIf="reclamation.satisfaction === '1'" class="text-success">The user is satisfied</p>
+      <p *ngIf="reclamation.satisfaction === '-1'" class="text-danger">The user is unsatisfied</p>
+      <p *ngIf="reclamation.satisfaction !== '1' && reclamation.satisfaction !== '-1'">{{ reclamation.satisfaction }}</p>
+    </div>
+  </div>
+</div>

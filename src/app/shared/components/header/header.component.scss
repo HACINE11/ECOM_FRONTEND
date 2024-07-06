@@ -39,3 +39,23 @@
     padding: 3px;
   }
 }
+
+
+.header-toolbar .right-section {
+  display: flex;
+  align-items: center;
+}
+
+.notification-item {
+  margin-right: 20px;
+}
+
+.user-button {
+  display: flex;
+  align-items: center;
+}
+
+.user-panel-container {
+  display: flex;
+  align-items: center;
+}

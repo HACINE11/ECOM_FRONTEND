@@ -7,6 +7,7 @@ import { DxButtonModule } from 'devextreme-angular/ui/button';
 import { DxToolbarModule } from 'devextreme-angular/ui/toolbar';
 
 import { Router } from '@angular/router';
+import { NotificationComponent } from 'src/app/notification/notification.component';
 @Component({
   selector: 'app-header',
   templateUrl: 'header.component.html',
@@ -58,7 +59,7 @@ export class HeaderComponent implements OnInit {
     UserPanelModule,
     DxToolbarModule
   ],
-  declarations: [ HeaderComponent ],
+  declarations: [ HeaderComponent, NotificationComponent ],
   exports: [ HeaderComponent ]
 })
 export class HeaderModule { }

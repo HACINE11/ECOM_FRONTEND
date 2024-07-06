@@ -1,0 +1,44 @@
+
+
+<br><br><br>
+<div class="container">
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Priority</th>
+                <th>Date</th>
+                <th>Statut</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="clickable-row" *ngFor="let listReclamation of listReclamations" (click)="onRowClick(listReclamation._id)">
+                <td><a [routerLink]="['/edit', listReclamation._id]">{{listReclamation.title}}</a></td>
+                <td>{{listReclamation.priorite}}</td>
+                <td>{{listReclamation.dateReclamation}}</td>
+                <td> {{listReclamation.statut_rec}} </td>
+                <td>
+                    <!--
+                        (click)="onRowClick(listReclamation._id)"
+    
+                    <button class="btn btn-sm btn-danger mx-1" (click)="deleteApartment(listReclamation._id)">Delete</button>
+    
+                    -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <ul *ngIf="listReclamations.length; else noReclamation">
+    
+    </ul>
+    
+    
+    <ng-template #noReclamation>
+        <p>No noReclamation available.</p>
+    </ng-template>
+
+</div>
+
+
