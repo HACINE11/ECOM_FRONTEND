@@ -10,25 +10,25 @@ export const navigation = [
     items: [
       {
         text: 'list reclamation',
-        path: '/listRec'
+        path: '/listRec',
       },
       {
         text: 'add category',
-        path: '/addCat'
+        path: '/addCat',
       },
       {
         text: 'statistics',
-        path: '/sta'
+        path: '/sta',
       },
       {
         text: 'list category',
-        path: '/listCat'
+        path: '/listCat',
       },
       {
         text: 'statistics category',
-        path: '/catego'
-      }
-    ]
+        path: '/catego',
+      },
+    ],
   },
   {
     text: 'Gestion Client',
@@ -44,39 +44,38 @@ export const navigation = [
       // },
       {
         text: 'Ajouter Categ-Client',
-        path: '/addcategorieclient'
+        path: '/addcategorieclient',
       },
       {
         text: 'list Client',
-        path: '/clients'
+        path: '/clients',
       },
       {
         text: 'list Categorie-Client',
-        path: '/categorieclients'
+        path: '/categorieclients',
       },
       {
         text: 'Ajouter Client',
-        path: '/addclient'
+        path: '/addclient',
       },
       {
         text: 'Statistic Client',
-        path: '/Statistic'
-      }
-    ]
+        path: '/Statistic',
+      },
+    ],
   },
   {
-    text: 'Management-Categorie',
+    text: 'Categorie-Produit',
     icon: 'folder',
     items: [
       {
-        text: 'management',
+        text: 'management produit',
         path: 'management-categorie',
       },
       {
-        text: 'add-categorie',
+        text: 'add-categorie produit',
         path: 'add-categorie',
       },
     ],
-  }
-
+  },
 ];
